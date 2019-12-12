@@ -1,0 +1,42 @@
+{
+  "name": "graphql_server_seed",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "ts-node --files  -r tsconfig-paths/register src/index",
+    "generate": "yarn plop --plopfile ./templates/plopfile.js",
+    "postgenerate": "yarn codegen",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@graphql-codegen/typescript-resolvers": "^1.9.1",
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.2",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/lodash": "^4.14.149",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.12.17",
+    "apollo-server": "^2.9.13",
+    "bcrypt": "^3.0.7",
+    "dataloader": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "graphql-import": "^0.7.1",
+    "inquirer-file-tree-selection-prompt": "^1.0.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "morgan": "^1.9.1",
+    "pg": "^7.14.0",
+    "plop": "^2.5.3",
+    "ts-node": "^8.5.4",
+    "tsconfig-paths": "^3.9.0",
+    "typeorm": "^0.2.21",
+    "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.9.1",
+    "@graphql-codegen/schema-ast": "^1.9.1"
+  }
+}

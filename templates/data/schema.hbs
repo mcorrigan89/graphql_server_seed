@@ -1,0 +1,7 @@
+type {{ pascalCase model }} {
+  id: ID!
+}
+
+extend type Query {
+  {{ camelCase model }}(id: ID!): {{ pascalCase model }}
+}

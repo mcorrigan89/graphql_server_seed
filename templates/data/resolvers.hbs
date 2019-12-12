@@ -1,0 +1,7 @@
+import { Resolvers } from '@graphql/resolver.types';
+
+export const userResolvers: Resolvers = {
+  Query: {
+    {{ camelCase model }}: (_, args, context) => context.{{ camelCase model }}Controller.get{{ pascalCase model }}ById(context, args.id)
+  }
+}

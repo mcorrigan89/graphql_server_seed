@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["esnext", "dom"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "src",
+    "removeComments": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "typeRoots": ["./typings"],
+    "traceResolution": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@data/*": ["src/data/*"],
+      "@graphql/*": ["src/graphql/*"],
+      "@services/*": ["src/services/*"],
+      "@schema/*": ["src/schema/*"],
+      "@src/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "typings"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.mock.ts",
+    "node_modules",
+    "test_reports",
+    "migration",
+    "tests",
+    "jest.config.js",
+    "ormconfig.js",
+    "paths.js",
+    "dist"
+  ]
+}

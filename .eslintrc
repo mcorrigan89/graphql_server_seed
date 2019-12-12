@@ -1,0 +1,61 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": [
+      "prettier",
+      "prettier/@typescript-eslint",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "prettier",
+      "@typescript-eslint"
+  ],
+  "settings": {
+      "react": {
+          "version": "detect"
+      }
+  },
+  "rules": {
+      "prettier/prettier": "error",
+      "indent": [
+          "error",
+          2,
+          {
+              "SwitchCase": 1,
+              "flatTernaryExpressions": true,
+              "ObjectExpression": 1
+          }
+      ],
+      "linebreak-style": [
+          "error",
+          "unix"
+      ],
+      "quotes": [
+          "error",
+          "single"
+      ],
+      "semi": [
+          "error",
+          "always"
+      ],
+      "no-unused-vars": "off",
+      "no-undef": "off",
+      "@typescript-eslint/no-explicit-any": [1],
+      "@typescript-eslint/class-name-casing": [2]
+  }
+}

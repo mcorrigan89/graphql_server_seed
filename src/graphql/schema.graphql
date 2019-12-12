@@ -1,0 +1,1 @@
+# import Query.*, Mutation.* from "src/data/user/schema.graphql"

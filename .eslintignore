@@ -1,0 +1,8 @@
+**/node_modules/**
+**/test_reports/**
+/docs/**/*
+apollo.config.js
+webpack.config.js
+/_templates/**
+/dist/**
+package.json

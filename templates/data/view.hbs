@@ -1,0 +1,10 @@
+import { ModelViewTemplate } from '@utils/view.template';
+import { Context } from '@app/context';
+import { {{ pascalCase model }} } from './model';
+
+export class {{ pascalCase model }}View extends ModelViewTemplate<{{ pascalCase model }}> {
+  constructor(context: Context, {{ camelCase model }}: {{ pascalCase model }}) {
+    super(context, {{ camelCase model }});
+  }
+
+}
