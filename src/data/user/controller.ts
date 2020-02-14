@@ -8,16 +8,7 @@ import { DecodedAuthToken } from '@app/auth.middleware';
 import { encrypt, compare } from '@app/password';
 import { NotFoundError } from '@app/errors';
 import { createToken } from '@app/token';
-
-export interface CreateUserPayload {
-  username: string;
-  password: string;
-}
-
-export interface LoginPayload {
-  username: string;
-  password: string;
-}
+import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
 
 type QueryType = 'UserById' | 'UserByUsername';
 
@@ -70,11 +61,13 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
   }
 
   public createUser = async (context: Context, payload: CreateUserPayload) => {
-    const { username, password } = payload;
+    const { username, password, firstName, lastName } = payload;
     const passwordHash = await encrypt(password)
     const userToCreate = new UserModel();
     userToCreate.username = username;
     userToCreate.password = passwordHash;
+    userToCreate.firstName = firstName ?? undefined;
+    userToCreate.lastName = lastName ?? undefined;
     const createdUser = await getRepository(UserModel).save(userToCreate);
     return this.getUserById(context, createdUser.id);
   }

@@ -14,6 +14,8 @@ export type Scalars = {
 export type CreateUserPayload = {
   username: Scalars['String'],
   password: Scalars['String'],
+  firstName?: Maybe<Scalars['String']>,
+  lastName?: Maybe<Scalars['String']>,
 };
 
 export type LoginPayload = {
@@ -25,6 +27,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   createUser: User,
   login: Scalars['String'],
+  _?: Maybe<Scalars['String']>,
 };
 
 
@@ -41,6 +44,7 @@ export type Query = {
    __typename?: 'Query',
   me?: Maybe<User>,
   user: User,
+  _?: Maybe<Scalars['String']>,
 };
 
 
@@ -52,6 +56,8 @@ export type User = {
    __typename?: 'User',
   id: Scalars['ID'],
   username: Scalars['String'],
+  firstName?: Maybe<Scalars['String']>,
+  lastName?: Maybe<Scalars['String']>,
 };
 
 
@@ -150,16 +156,20 @@ export type ResolversParentTypes = {
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>,
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>,
+  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
+  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = Context> = {

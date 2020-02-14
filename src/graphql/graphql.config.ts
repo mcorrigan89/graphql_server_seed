@@ -3,13 +3,13 @@ import { Context } from '@app/context';
 import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
 import { makeExecutableSchema, gql } from 'apollo-server';
-import { userResolvers } from '@data/user/resolvers';
+import { resolvers } from '@graphql/resolvers';
 import { importSchema } from 'graphql-import';
 
 export const createSchema = () => {
   const schema = makeExecutableSchema({ 
     typeDefs: importSchema('src/graphql/schema.graphql'), 
-    resolvers: merge(userResolvers) 
+    resolvers: merge(resolvers) 
   });
   return schema;
 };
