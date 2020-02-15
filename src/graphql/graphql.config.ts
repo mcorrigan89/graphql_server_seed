@@ -6,16 +6,16 @@ import { makeExecutableSchema, gql } from 'apollo-server';
 import { resolvers } from '@graphql/resolvers';
 import { importSchema } from 'graphql-import';
 
-export const createSchema = () => {
+export const createSchema = async () => {
   const schema = makeExecutableSchema({ 
-    typeDefs: importSchema('src/graphql/schema.graphql'), 
+    typeDefs: await importSchema('src/graphql/schema.graphql'), 
     resolvers: merge(resolvers) 
   });
   return schema;
 };
 
 export const createApolloServer = async () => {
-  const schema = createSchema();
+  const schema = await createSchema();
   return new ApolloServer({
     schema,
     introspection: true, 

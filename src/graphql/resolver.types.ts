@@ -27,7 +27,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   createUser: User,
   login: Scalars['String'],
-  _?: Maybe<Scalars['String']>,
+  a?: Maybe<Scalars['String']>,
 };
 
 
@@ -44,7 +44,7 @@ export type Query = {
    __typename?: 'Query',
   me?: Maybe<User>,
   user: User,
-  _?: Maybe<Scalars['String']>,
+  a?: Maybe<Scalars['String']>,
 };
 
 
@@ -156,13 +156,13 @@ export type ResolversParentTypes = {
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>,
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>,
-  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  a?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>,
-  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  a?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {

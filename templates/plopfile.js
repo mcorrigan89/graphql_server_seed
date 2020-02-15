@@ -25,12 +25,6 @@ const schema = {
   templateFile: 'data/schema.hbs'
 };
 
-const resolvers = {
-  type: 'add',
-  path: '{{directory}}/{{dotCase model}}/resolvers.ts',
-  templateFile: 'data/resolvers.hbs'
-};
-
 const updateSchema = {
   type: 'append',
   path: path.resolve() + '/src/graphql/schema.graphql',
@@ -79,6 +73,6 @@ module.exports = plop => {
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',
     prompts: [modelPrompt, directoryPrompt],
-    actions: [controller, model, view, schema, resolvers, updateSchema, updateContextImport, updateContext, updateContextConstructor]
+    actions: [controller, model, view, schema, updateSchema, updateContextImport, updateContext, updateContextConstructor]
   });
 }
