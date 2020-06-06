@@ -17,7 +17,7 @@
     "@types/lodash": "^4.14.149",
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.12.17",
-    "apollo-server": "^2.9.13",
+    "apollo-server": "^2.14.2",
     "bcrypt": "^3.0.7",
     "dataloader": "^2.0.0",
     "dotenv": "^8.2.0",
