@@ -2,14 +2,17 @@ import { ApolloServer } from 'apollo-server-express';
 import { Context } from '@app/context';
 import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
-import { makeExecutableSchema, gql } from 'apollo-server';
+import { addResolveFunctionsToSchema } from 'apollo-server';
 import { resolvers } from '@graphql/resolvers';
-import { importSchema } from 'graphql-import';
+import { join } from 'path';
+import { loadSchema } from '@graphql-tools/load';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
 export const createSchema = async () => {
-  const schema = makeExecutableSchema({ 
-    typeDefs: await importSchema('src/graphql/schema.graphql'), 
-    resolvers: merge(resolvers) 
+  const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
+  const schema = addResolveFunctionsToSchema({
+    schema: schemaTypeDefs,
+    resolvers: merge(resolvers) ,
   });
   return schema;
 };

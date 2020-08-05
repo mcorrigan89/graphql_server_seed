@@ -5,4 +5,3 @@ type Query {
 type Mutation {
   _: String
 }
-# import Query.*, Mutation.* from "src/data/user/schema.graphql"
