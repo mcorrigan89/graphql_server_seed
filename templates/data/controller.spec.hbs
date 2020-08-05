@@ -18,6 +18,6 @@ describe('{{ pascalCase model }}Controller', () => {
     const {{ camelCase model }}ToSave = new {{ pascalCase model }}Model();
     const {{ camelCase model }}saved = await getRepository({{ pascalCase model }}Model).save({{ camelCase model }}ToSave);
     const {{ camelCase model }}View = await {{ camelCase model }}Controller.get{{ pascalCase model }}ById(contextMock, {{ camelCase model }}saved.id);
-    expect({{ camelCase model }}View.data).toEqual({{ camelCase model }}saved);
+    expect({{ camelCase model }}View!.data).toEqual({{ camelCase model }}saved);
   });
 });
