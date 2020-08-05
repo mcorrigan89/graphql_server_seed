@@ -17,4 +17,16 @@ describe('UserView', () => {
     expect(user.lastName).toBe('Corrigan');
     expect(user.username).toBe('mcorrigan89');
   });
+
+  it('should return undefined for undefined model properties', () => {
+    const contextMock = new Context();
+    const userModel = new UserModel();
+    userModel.id = '1';
+    userModel.username = 'mcorrigan89';
+    const user = new UserView(contextMock, userModel);
+    expect(user.id).toBe('1');
+    expect(user.firstName).toBeUndefined();
+    expect(user.lastName).toBeUndefined();
+    expect(user.username).toBe('mcorrigan89');
+  });
 });

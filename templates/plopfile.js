@@ -25,6 +25,12 @@ const view = {
   templateFile: 'data/view.hbs'
 };
 
+const viewSpec = {
+  type: 'add',
+  path: '{{directory}}/{{dotCase model}}/view.spec.ts',
+  templateFile: 'data/view.spec.hbs'
+};
+
 const schema = {
   type: 'add',
   path: '{{directory}}/{{dotCase model}}/schema.graphql',
@@ -89,6 +95,6 @@ module.exports = plop => {
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',
     prompts: [modelPrompt, directoryPrompt],
-    actions: [controller, model, modelSpec, view, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
+    actions: [controller, model, modelSpec, view, viewSpec, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
   });
 }

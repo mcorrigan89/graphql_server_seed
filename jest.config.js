@@ -3,6 +3,15 @@ const projectRoot = path.resolve('.');
 const { defaults: tsjPreset } = require('ts-jest/presets');
 
 module.exports = {
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: -10
+    }
+  },
+  collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/app/**/*.{ts,js}'],
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.spec.json',

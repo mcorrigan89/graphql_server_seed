@@ -1,0 +1,14 @@
+import { {{ pascalCase model }}View } from './view';
+import { {{ pascalCase model }}Model } from './model';
+jest.mock('../../app/context');
+import { Context } from '../../app/context';
+
+describe('{{ pascalCase model }}View', () => {
+  it('should have model properties exposed', () => {
+    const contextMock = new Context();
+    const {{ camelCase model }}Model = new {{ pascalCase model }}Model();
+    {{ camelCase model }}Model.id = '1';
+    const {{ camelCase model }} = new {{ pascalCase model }}View(contextMock, {{ camelCase model }}Model);
+    expect({{ camelCase model }}.id).toBe('1');
+  });
+});
