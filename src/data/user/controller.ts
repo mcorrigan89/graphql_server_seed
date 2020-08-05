@@ -6,7 +6,7 @@ import { UserModel } from './model';
 import { UserView } from './view';
 import { DecodedAuthToken } from '@app/auth.middleware';
 import { encrypt, compare } from '@app/password';
-import { NotFoundError } from '@app/errors';
+import { NotFoundError } from '@utils/errors';
 import { createToken } from '@app/token';
 import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
 
