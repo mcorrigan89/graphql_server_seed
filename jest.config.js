@@ -11,7 +11,7 @@ module.exports = {
       statements: -10
     }
   },
-  collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/app/**/*.{ts,js}'],
+  collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/graphql/graphql.config.ts', '!src/app/**/*.{ts,js}'],
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.spec.json',
@@ -37,6 +37,8 @@ module.exports = {
     '^[@]tests/(.+)': '<rootDir>/tests/$1'
   },
   preset: 'ts-jest/presets/js-with-ts',
+  clearMocks: true,
+  maxWorkers: 1,
   rootDir: projectRoot,
   testEnvironment: 'node',
   testMatch: ['<rootDir>/src/**/*.spec.{ts,js}', '<rootDir>/src/**/*.test.{ts,js}', '<rootDir>/test/**/*.{ts,js}'],

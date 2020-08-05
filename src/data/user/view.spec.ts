@@ -2,8 +2,16 @@ import { UserView } from './view';
 import { UserModel } from './model';
 jest.mock('../../app/context');
 import { Context } from '../../app/context';
+import { connectionPostgres } from '../../app/setup.db';
 
 describe('UserView', () => {
+  beforeAll(async () => {
+    await connectionPostgres.create('test');
+  });
+  afterAll(async () => {
+    await connectionPostgres.close();
+  });
+
   it('should have model properties exposed', () => {
     const contextMock = new Context();
     const userModel = new UserModel();

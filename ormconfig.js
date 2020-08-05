@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV === 'production') {
-  const { ormConfig } = require('./dist/config');
-  module.exports = ormConfig;
+  const { connectionOptions } = require('./dist/config');
+  module.exports = connectionOptions;
 } else {
-  const { ormConfig } = require('./src/app/config');
-  module.exports = ormConfig;
+  const { connectionOptions } = require('./src/app/config');
+  module.exports = connectionOptions;
 }

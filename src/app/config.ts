@@ -42,21 +42,38 @@ export const serverConfig: ServerConfig = {
   }
 };
 
-export const ormConfig: ConnectionOptions = {
-  type: 'postgres',
-  host: env.POSTGRES_HOST || '',
-  port: Number(env.POSTGRES_PORT) || 5432,
-  username: env.POSTGRES_USER || '',
-  password: env.POSTGRES_PASSWORD || '',
-  database: env.POSTGRES_DATABASE || '',
-  synchronize: true,
-  dropSchema: false,
-  logging: false,
-  cache: true,
-  entities: MODELS,
-  migrations: env.NODE_ENV === 'production' ? [] : ['migration/*.ts'],
-  subscribers: env.NODE_ENV === 'production' ? ['dist/subscriber/**/*.js'] : ['src/subscriber/**/*.ts'],
-  cli: {
-    migrationsDir: 'migration'
+export const connectionOptions: ConnectionOptions[] = [
+  {
+    name: 'default',
+    type: 'postgres',
+    host: env.POSTGRES_HOST || '',
+    port: Number(env.POSTGRES_PORT) || 5432,
+    username: env.POSTGRES_USER || '',
+    password: env.POSTGRES_PASSWORD || '',
+    database: env.POSTGRES_DATABASE || '',
+    synchronize: true,
+    dropSchema: false,
+    logging: false,
+    cache: true,
+    entities: MODELS,
+    migrations: env.NODE_ENV === 'production' ? [] : ['migration/*.ts'],
+    subscribers: env.NODE_ENV === 'production' ? ['dist/subscriber/**/*.js'] : ['src/subscriber/**/*.ts'],
+    cli: {
+      migrationsDir: 'migration'
+    }
+  },
+  {
+    name: 'test',
+    type: 'postgres',
+    host: env.POSTGRES_HOST || '',
+    port: Number(env.POSTGRES_PORT) || 5432,
+    username: env.POSTGRES_USER || '',
+    password: env.POSTGRES_PASSWORD || '',
+    database: env.POSTGRES_DATABASE || '',
+    synchronize: true,
+    dropSchema: true,
+    logging: false,
+    cache: true,
+    entities: MODELS
   }
-};
+];

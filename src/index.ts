@@ -1,5 +1,5 @@
-import { createConnection } from 'typeorm';
 import { Server, Route } from '@app/server';
+import { connectionPostgres } from '@app/setup.db';
 import { createApolloServer } from '@graphql/graphql.config';
 import { tokenCheck } from '@app/auth.middleware';
 
@@ -11,7 +11,9 @@ const healthCheck: Route = {
 };
 
 const main = async () => {
-  await createConnection();
+  console.log(process.env.DB_ENV);
+  const dbEnv = process.env.DB_ENV === 'test' ? 'test' : 'default';
+  await connectionPostgres.create(dbEnv);
   const apollo = await createApolloServer();
   const server = new Server();
   server.registerMiddleware([tokenCheck]);

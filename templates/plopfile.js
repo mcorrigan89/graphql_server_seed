@@ -7,6 +7,12 @@ const controller = {
   templateFile: 'data/controller.hbs'
 };
 
+const controllerSpec = {
+  type: 'add',
+  path: '{{directory}}/{{dotCase model}}/controller.spec.ts',
+  templateFile: 'data/controller.spec.hbs'
+};
+
 const model = {
   type: 'add',
   path: '{{directory}}/{{dotCase model}}/model.ts',
@@ -95,6 +101,6 @@ module.exports = plop => {
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',
     prompts: [modelPrompt, directoryPrompt],
-    actions: [controller, model, modelSpec, view, viewSpec, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
+    actions: [controller, controllerSpec, model, modelSpec, view, viewSpec, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
   });
 }

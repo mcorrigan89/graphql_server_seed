@@ -1,6 +1,13 @@
 import { UserModel } from './model';
+import { connectionPostgres } from '../../app/setup.db';
 
 describe('UserModel', () => {
+  beforeAll(async () => {
+    await connectionPostgres.create('test');
+  });
+  afterAll(async () => {
+    await connectionPostgres.close();
+  });
   it('should have properties', () => {
     const userModel = new UserModel();
     userModel.id = '1';

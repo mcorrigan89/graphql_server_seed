@@ -1,0 +1,23 @@
+jest.mock('../../app/context');
+import { Context } from '../../app/context';
+import { {{ pascalCase model }}Controller } from './controller';
+import { connectionPostgres } from '../../app/setup.db';
+import { getRepository } from 'typeorm';
+import { {{ pascalCase model }}Model } from './model';
+
+describe('{{ pascalCase model }}Controller', () => {
+  beforeAll(async () => {
+    await connectionPostgres.create('test');
+  });
+  afterAll(async () => {
+    await connectionPostgres.close();
+  });
+  it('should get a {{ model }} by ID', async () => {
+    const contextMock = new Context();
+    const {{ camelCase model }}Controller = new {{ pascalCase model }}Controller();
+    const {{ camelCase model }}ToSave = new {{ pascalCase model }}Model();
+    const {{ camelCase model }}saved = await getRepository({{ pascalCase model }}Model).save({{ camelCase model }}ToSave);
+    const {{ camelCase model }}View = await {{ camelCase model }}Controller.get{{ pascalCase model }}ById(contextMock, {{ camelCase model }}saved.id);
+    expect({{ camelCase model }}View.data).toEqual({{ camelCase model }}saved);
+  });
+});
