@@ -25,24 +25,19 @@ const schema = {
   templateFile: 'data/schema.hbs'
 };
 
-const updateSchema = {
-  type: 'append',
-  path: path.resolve() + '/src/graphql/schema.graphql',
-  template: '# import Query.*, Mutation.* from "src/data/{{ dotCase model }}/schema.graphql"'
-}
-
 const updateContextImport = {
   type: 'modify',
   path: path.resolve() + '/src/app/context.ts',
   pattern: '',
   template: `import { {{ pascalCase model }}Controller } from '@data/{{ dotCase model }}/controller'; \n`
 }
+
 const updateContext = {
   type: 'modify',
   path: path.resolve() + '/src/app/context.ts',
   pattern: 'export class Context {',
   template: `export class Context {
-  public readonly {{ dotCase model }}Controller: {{ pascalCase model }}Controller;`
+  public readonly {{ camelCase model }}Controller: {{ pascalCase model }}Controller;`
 }
 
 const updateContextConstructor = {
@@ -50,7 +45,22 @@ const updateContextConstructor = {
   path: path.resolve() + '/src/app/context.ts',
   pattern: ' constructor() {',
   template: ` constructor() {
-    this.{{ dotCase model }}Controller = new {{ pascalCase model }}Controller();`
+    this.{{ camelCase model }}Controller = new {{ pascalCase model }}Controller();`
+}
+
+const updateModelIndexImport = {
+  type: 'modify',
+  path: path.resolve() + '/src/data/index.ts',
+  pattern: '',
+  template: `import { {{ pascalCase model }}Model } from '@data/{{ dotCase model }}/model'; \n`
+}
+
+const updateModelIndexArray = {
+  type: 'modify',
+  path: path.resolve() + '/src/data/index.ts',
+  pattern: 'export const MODELS = [',
+  template: `export const MODELS = [
+    {{ pascalCase model }}Model,`
 }
 
 const modelPrompt = {
@@ -73,6 +83,6 @@ module.exports = plop => {
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',
     prompts: [modelPrompt, directoryPrompt],
-    actions: [controller, model, view, schema, updateSchema, updateContextImport, updateContext, updateContextConstructor]
+    actions: [controller, model, view, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
   });
 }

@@ -2,16 +2,16 @@ import { ControllerTemplate } from '@utils/controller.template';
 import { getManager } from 'typeorm';
 import { Context } from '@app/context';
 import { BadRequestError } from '@utils/errors';
-import { {{ pascalCase model }} } from './model';
+import { {{ pascalCase model }}Model } from './model';
 import { {{ pascalCase model }}View } from './view';
 
 type QueryType = '{{ pascalCase model }}ById';
 
 const query = () => 
   getManager()
-    .createQueryBuilder({{ pascalCase model }}, '{{ snakeCase model }}')
+    .createQueryBuilder({{ pascalCase model }}Model, '{{ snakeCase model }}')
 
-export class {{ pascalCase model }}Controller extends ControllerTemplate<{{ pascalCase model }}, QueryType> {
+export class {{ pascalCase model }}Controller extends ControllerTemplate<{{ pascalCase model }}Model, QueryType> {
   constructor() {
     super();
     this.loaders['{{ pascalCase model }}ById'] = this.wrapQueryInDataLoader(
