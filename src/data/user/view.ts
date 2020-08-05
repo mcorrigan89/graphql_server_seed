@@ -10,4 +10,12 @@ export class UserView extends ModelViewTemplate<UserModel> {
   get username() {
     return this.data.username;
   }
+
+  get firstName() {
+    return this.data.firstName;
+  }
+
+  get lastName() {
+    return this.data.lastName;
+  }
 }

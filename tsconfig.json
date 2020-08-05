@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "removeComments": true,
     "strict": true,
     "strictPropertyInitialization": false,
@@ -17,8 +17,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["node"],
-    "typeRoots": ["./typings"],
     "traceResolution": false,
     "resolveJsonModule": true,
     "paths": {
@@ -28,7 +26,8 @@
       "@schema/*": ["src/schema/*"],
       "@src/*": ["src/*"],
       "@app/*": ["src/app/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@tests/*": ["tests/*"]
     }
   },
   "include": [
@@ -36,8 +35,6 @@
     "typings"
   ],
   "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.mock.ts",
     "node_modules",
     "test_reports",
     "migration",
