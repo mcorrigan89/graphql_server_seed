@@ -78,7 +78,7 @@ const directoryPrompt = {
 };
 
 module.exports = plop => {
-  plop.setPrompt('directory', inquirerFileTreeSelection)
+  plop.setPrompt('directory', inquirerFileTreeSelection);
 
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',

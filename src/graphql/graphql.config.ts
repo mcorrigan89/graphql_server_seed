@@ -12,7 +12,7 @@ export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
   const schema = addResolveFunctionsToSchema({
     schema: schemaTypeDefs,
-    resolvers: merge(resolvers) ,
+    resolvers: merge(resolvers)
   });
   return schema;
 };
@@ -21,14 +21,14 @@ export const createApolloServer = async () => {
   const schema = await createSchema();
   return new ApolloServer({
     schema,
-    introspection: true, 
+    introspection: true,
     context: async ctx => {
       const context = new Context();
       const token = (ctx.req as AuthenticatedRequest).decodedToken;
       if (token) {
-        await context.setCurrentUser(token.id)
+        await context.setCurrentUser(token.id);
       }
       return context;
     }
   });
-}
+};

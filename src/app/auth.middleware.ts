@@ -3,7 +3,6 @@ import { verifyToken } from './token';
 
 export const getToken = (req: Request) => req.headers.authorization;
 
-
 export interface DecodedAuthToken {
   id: string;
 }
@@ -19,10 +18,10 @@ export const tokenCheck: RequestHandler = async (req: AuthenticatedRequest, _, n
       req.decodedToken = decodedToken;
       next();
     } catch (err) {
-      console.error(err)
+      console.error(err);
       next();
     }
   } else {
     next();
   }
-}
+};

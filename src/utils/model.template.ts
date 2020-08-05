@@ -1,7 +1,6 @@
 import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, Column, Generated, Index } from 'typeorm';
 
-export abstract class ModelTemplate  {
-
+export abstract class ModelTemplate {
   @PrimaryGeneratedColumn('increment')
   public key: number;
 
@@ -19,10 +18,6 @@ export abstract class ModelTemplate  {
   @VersionColumn({ default: 1 })
   public version: number;
 
-  @Column('bool', { default: false})
+  @Column('bool', { default: false })
   public deleted: boolean;
 }
-
-export interface ModelTemplateClass<ModelTemplate> {
-  new(...args: any[]): ModelTemplate;
-};

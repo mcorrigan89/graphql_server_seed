@@ -39,7 +39,7 @@ export const serverConfig: ServerConfig = {
     database: env.POSTGRES_DATABASE as string,
     userName: env.POSTGRES_USER as string,
     password: env.POSTGRES_PASSWORD as string
-  },
+  }
 };
 
 export const ormConfig: ConnectionOptions = {

@@ -16,7 +16,6 @@ export class ViewTemplate<T> {
 }
 
 export class ModelViewTemplate<T extends ModelTemplate> extends ViewTemplate<T> {
-
   get key() {
     return this.data.key;
   }

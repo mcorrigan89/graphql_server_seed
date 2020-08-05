@@ -12,9 +12,9 @@ export class Context {
 
   public getCurrentUser = () => {
     return this.currentUser;
-  }
+  };
 
   public setCurrentUser = async (id: string) => {
     this.currentUser = await this.userController.getUserById(this, id);
-  }
+  };
 }

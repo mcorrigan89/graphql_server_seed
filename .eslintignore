@@ -3,6 +3,7 @@
 /docs/**/*
 apollo.config.js
 webpack.config.js
-/_templates/**
+/templates/**
 /dist/**
 package.json
+/src/graphql/resolver.types.ts

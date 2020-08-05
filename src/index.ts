@@ -6,22 +6,18 @@ import { tokenCheck } from '@app/auth.middleware';
 const healthCheck: Route = {
   path: '/status',
   handler: (req, res) => {
-    res.send({ status: 'happy!' })
+    res.send({ status: 'happy!' });
   }
-}
+};
 
 const main = async () => {
-  await createConnection()
+  await createConnection();
   const apollo = await createApolloServer();
   const server = new Server();
-  server.registerMiddleware([
-    tokenCheck
-  ]);
+  server.registerMiddleware([tokenCheck]);
   server.addApollo(apollo);
-  server.registerRoutes([
-    healthCheck,
-  ]);
+  server.registerRoutes([healthCheck]);
   server.init(8080);
-}
+};
 
 main();
