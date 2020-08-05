@@ -8,7 +8,7 @@ describe('{{ pascalCase model }}View', () => {
     const contextMock = new Context();
     const {{ camelCase model }}Model = new {{ pascalCase model }}Model();
     {{ camelCase model }}Model.id = '1';
-    const user = new {{ pascalCase model }}View(contextMock, {{ camelCase model }}Model);
+    const {{ camelCase model }} = new {{ pascalCase model }}View(contextMock, {{ camelCase model }}Model);
     expect({{ camelCase model }}.id).toBe('1');
   });
 });

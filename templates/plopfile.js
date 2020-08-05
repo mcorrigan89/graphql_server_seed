@@ -13,6 +13,12 @@ const model = {
   templateFile: 'data/model.hbs'
 };
 
+const modelSpec = {
+  type: 'add',
+  path: '{{directory}}/{{dotCase model}}/model.spec.ts',
+  templateFile: 'data/model.spec.hbs'
+};
+
 const view = {
   type: 'add',
   path: '{{directory}}/{{dotCase model}}/view.ts',
@@ -52,7 +58,7 @@ const updateModelIndexImport = {
   type: 'modify',
   path: path.resolve() + '/src/data/index.ts',
   pattern: '',
-  template: `import { {{ pascalCase model }}Model } from '@data/{{ dotCase model }}/model'; \n`
+  template: `import { {{ pascalCase model }}Model } from '@data/{{ dotCase model }}/model';\n`
 }
 
 const updateModelIndexArray = {
@@ -83,6 +89,6 @@ module.exports = plop => {
   plop.setGenerator('Component', {
     description: 'Create an object w/ Controller, View, Model, and Schema',
     prompts: [modelPrompt, directoryPrompt],
-    actions: [controller, model, view, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
+    actions: [controller, model, modelSpec, view, schema, updateContextImport, updateContext, updateContextConstructor, updateModelIndexImport, updateModelIndexArray]
   });
 }
