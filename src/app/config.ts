@@ -8,12 +8,23 @@
 
 import { ConnectionOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
-dotenv.config();
 import { MODELS } from '@data/index';
+import path from 'path';
 
 const env = process.env;
 export const isProduction: boolean = env.NODE_ENV === 'production';
 export const isTest: boolean = env.NODE_ENV === 'test' || env.NODE_ENV === 'ci';
+const root = path.resolve('.');
+
+if (isTest) {
+  dotenv.config({ path: root + '/.env.test' });
+} else {
+  dotenv.config({ path: root + '/.env' });
+}
+
+export const dbConnectionName = () => {
+  return isTest ? 'test' : 'default';
+};
 
 export interface DatabaseConfig {
   host: string;
@@ -51,7 +62,7 @@ export const connectionOptions: ConnectionOptions[] = [
     username: env.POSTGRES_USER || '',
     password: env.POSTGRES_PASSWORD || '',
     database: env.POSTGRES_DATABASE || '',
-    synchronize: true,
+    synchronize: false,
     dropSchema: false,
     logging: false,
     cache: true,
@@ -70,8 +81,8 @@ export const connectionOptions: ConnectionOptions[] = [
     username: env.POSTGRES_USER || '',
     password: env.POSTGRES_PASSWORD || '',
     database: env.POSTGRES_DATABASE || '',
-    synchronize: true,
-    dropSchema: true,
+    synchronize: false,
+    dropSchema: false,
     logging: false,
     cache: true,
     entities: MODELS

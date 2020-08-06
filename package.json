@@ -10,7 +10,7 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "lint": "yarn eslint --ext .tsx --ext .ts src/",
     "lint:fix": "yarn eslint --ext .tsx --ext .ts src/ --fix",
-    "test": "NODE_ENV=test DB_ENV=test jest --config jest.config.js --coverage"
+    "test": "NODE_ENV=test jest --config jest.config.js --coverage"
   },
   "dependencies": {
     "@graphql-codegen/typescript-resolvers": "^1.9.1",

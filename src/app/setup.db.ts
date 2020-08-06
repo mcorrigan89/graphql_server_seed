@@ -4,6 +4,10 @@ export const connectionPostgres = {
   create: async (connectionName: 'default' | 'test' = 'default'): Promise<Connection> => {
     const connectionOptions = await getConnectionOptions(connectionName);
     const connection = await createConnection({ ...connectionOptions, name: 'default' });
+    if (connectionName === 'test') {
+      await connection.dropDatabase();
+      await connection.synchronize();
+    }
     return connection;
   },
 
