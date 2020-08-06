@@ -5,6 +5,8 @@ export const createToken = <T extends object>(data: T) => {
   return sign(data, serverConfig.secret);
 };
 
+type TokenDecoded<T> = T & { iat: string };
+
 export const verifyToken = <T extends object>(token: string) => {
-  return verify(token, serverConfig.secret) as T;
+  return verify(token, serverConfig.secret) as TokenDecoded<T>;
 };

@@ -1,0 +1,9 @@
+import { {{ pascalCase model }}Model } from './model';
+
+describe('{{ pascalCase model }}Model', () => {
+  it('should have properties', () => {
+    const {{ camelCase model }}Model = new {{ pascalCase model }}Model();
+    {{ camelCase model }}Model.id = '1';
+    expect({{ camelCase model }}Model).toEqual({ id: '1' });
+  });
+});
