@@ -12,6 +12,7 @@ describe('UserController', () => {
   afterAll(async () => {
     await connectionPostgres.close();
   });
+
   it('should get a user by ID', async () => {
     const contextMock = new Context();
     const userController = new UserController();
@@ -22,6 +23,36 @@ describe('UserController', () => {
     const userView = await userController.getUserById(contextMock, savedUser.id);
     expect(userView.data).toEqual(savedUser);
   });
+
+  it('should get a list of users by ids', async () => {
+    const contextMock = new Context();
+    const userController = new UserController();
+    // User 1
+    const user1ToSave = new UserModel();
+    user1ToSave.username = 'test-user-1';
+    user1ToSave.password = 'test-password-1';
+    const savedUser1 = await getRepository(UserModel).save(user1ToSave);
+    // User 2
+    const user2ToSave = new UserModel();
+    user2ToSave.username = 'test-user-2';
+    user2ToSave.password = 'test-password-2';
+    const savedUser2 = await getRepository(UserModel).save(user2ToSave);
+    const userViews = await userController.getUsersByIds(contextMock, [savedUser1.id, savedUser2.id]);
+    expect(userViews[0].data).toEqual(savedUser1);
+    expect(userViews[1].data).toEqual(savedUser2);
+  });
+
+  it('should get a user by username', async () => {
+    const contextMock = new Context();
+    const userController = new UserController();
+    const userToSave = new UserModel();
+    userToSave.username = 'test-user';
+    userToSave.password = 'test-password';
+    const savedUser = await getRepository(UserModel).save(userToSave);
+    const userView = await userController.getUserByUsername(contextMock, 'test-user');
+    expect(userView!.data).toEqual(savedUser);
+  });
+
   it('should create a user', async () => {
     const contextMock = new Context();
     const userController = new UserController();

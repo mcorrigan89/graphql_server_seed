@@ -2,23 +2,44 @@ import { createTestClient } from 'apollo-server-testing';
 import { createSchema } from './graphql.config';
 import { Context } from '@src/app/context';
 import { ApolloServer } from 'apollo-server';
+import { connectionPostgres } from '@app/setup.db';
+import { getRepository } from 'typeorm';
+import { UserModel } from '@data/user/model';
 
-it('fetches single launch', async () => {
-  //   const userAPI = new UserAPI({ store });
-  //   const launchAPI = new LaunchAPI();
-
-  // create a test server to test against, using our production typeDefs,
-  // resolvers, and dataSources.
-  const schema = await createSchema();
-  const server = new ApolloServer({
-    schema,
-    context: () => new Context()
+describe('Resolvers', () => {
+  beforeAll(async () => {
+    await connectionPostgres.create('test');
+  });
+  afterAll(async () => {
+    await connectionPostgres.close();
   });
 
-  // use the test server to create a query function
-  const { query } = createTestClient(server);
+  describe('User Resolvers', () => {
+    it('finds created User By Id', async () => {
+      const schema = await createSchema();
+      const server = new ApolloServer({
+        schema,
+        context: () => new Context()
+      });
+      const userToSave = new UserModel();
+      userToSave.username = 'graph-test-user';
+      userToSave.password = 'graph-test-user-password';
+      userToSave.firstName = 'Testy';
+      userToSave.lastName = 'McTestFace';
+      const savedUser = await getRepository(UserModel).save(userToSave);
 
-  // run query against the server and snapshot the output
-  const res = await query({ query: '{ me { id } }', variables: { id: 1 } });
-  expect(res).toMatchSnapshot();
+      const { query } = createTestClient(server);
+      const res = await query({
+        query: `query UserById($id: ID!) {
+        user(id: $id) {
+          username
+          firstName
+          lastName
+        }
+      }`,
+        variables: { id: savedUser.id }
+      });
+      expect(res.data).toEqual({ user: { username: 'graph-test-user', firstName: 'Testy', lastName: 'McTestFace' } });
+    });
+  });
 });

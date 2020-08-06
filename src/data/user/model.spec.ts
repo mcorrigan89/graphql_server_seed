@@ -8,6 +8,7 @@ describe('UserModel', () => {
   afterAll(async () => {
     await connectionPostgres.close();
   });
+
   it('should have properties', () => {
     const userModel = new UserModel();
     userModel.id = '1';
