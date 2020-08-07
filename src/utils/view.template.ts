@@ -25,10 +25,10 @@ export class ModelViewTemplate<T extends ModelTemplate> extends ViewTemplate<T> 
   }
 
   get createdAt() {
-    return this.data.createAt;
+    return this.data.createdAt;
   }
 
   get updatedAt() {
-    return this.data.updateAt;
+    return this.data.updatedAt;
   }
 }

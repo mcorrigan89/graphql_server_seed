@@ -10,10 +10,10 @@ export abstract class ModelTemplate {
   public id: string;
 
   @CreateDateColumn()
-  public createAt: Date;
+  public createdAt: Date;
 
   @UpdateDateColumn()
-  public updateAt: Date;
+  public updatedAt: Date;
 
   @VersionColumn({ default: 1 })
   public version: number;
