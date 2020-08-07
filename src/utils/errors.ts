@@ -2,29 +2,29 @@ import { ApolloError } from 'apollo-server';
 
 // HTTP 400 - Bad Request
 export class BadRequestError extends ApolloError {
-  constructor(message: string, code?: string, props?: Record<string, unknown>) {
-    super(message, code ? code : 'BAD_REQUEST', { ...props, statusCode: 400 });
+  constructor(message?: string, code?: string) {
+    super(message ? message : 'Bad Request', code ? code : 'BAD_REQUEST', { statusCode: 400 });
   }
 }
 
 // HTTP - 401 Unauthorized
 export class AuthorizationError extends ApolloError {
-  constructor(message?: string, props?: Record<string, unknown>) {
-    super(message ? message : 'Not Authorized', 'NOT_AUTHORIZED', { ...props, statusCode: 401 });
+  constructor(message?: string) {
+    super(message ? message : 'Not Authorized', 'NOT_AUTHORIZED', { statusCode: 401 });
   }
 }
 
 // HTTP - 403 Forbidden
 export class AuthenticationError extends ApolloError {
-  constructor(message?: string, props?: Record<string, unknown>) {
-    super(message ? message : 'Not Authenticated', 'NOT_AUTHENTICATED', { ...props, statusCode: 403 });
+  constructor(message?: string) {
+    super(message ? message : 'Not Authenticated', 'NOT_AUTHENTICATED', { statusCode: 403 });
   }
 }
 
 // HTTP - 404 Not Found
 export class NotFoundError extends ApolloError {
-  constructor(message?: string, props?: Record<string, unknown>) {
-    super(message ? message : 'Not Found', 'NOT_FOUND', { ...props, statusCode: 404 });
+  constructor(message?: string) {
+    super(message ? message : 'Not Found', 'NOT_FOUND', { statusCode: 404 });
   }
 }
 

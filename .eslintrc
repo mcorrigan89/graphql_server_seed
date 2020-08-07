@@ -47,7 +47,7 @@
       ],
       "quotes": [
           "error",
-          "single",
+          "single"
       ],
       "semi": [
           "error",
