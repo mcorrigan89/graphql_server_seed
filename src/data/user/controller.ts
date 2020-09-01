@@ -15,8 +15,8 @@ type QueryType = 'UserById' | 'UserByUsername';
 const query = () => getManager().createQueryBuilder(UserModel, 'user');
 
 export class UserController extends ControllerTemplate<UserModel, QueryType> {
-  constructor() {
-    super();
+  constructor(context: Context) {
+    super(context);
     this.loaders['UserById'] = this.wrapQueryInDataLoader(async (ids: ReadonlyArray<string>) => {
       const users = await query().where('user.id in (:...ids)', { ids }).getMany();
       return this.orderResultsByIds(ids, users);
@@ -27,22 +27,22 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
     });
   }
 
-  public getUserById = async (context: Context, id: string) => {
+  public getUserById = async (id: string) => {
     const user = await this.loaders['UserById'].load(id);
     if (user) {
-      return new UserView(context, user);
+      return new UserView(this.context, user);
     } else {
       throw new NotFoundError(`User ${id} not found`);
     }
   };
 
-  public getUsersByIds = async (context: Context, ids: Array<string>) => {
+  public getUsersByIds = async (ids: Array<string>) => {
     const users = await this.loaders['UserById'].loadMany(ids);
     return users.map(userOrError => {
       if (userOrError instanceof Error) {
         throw new BadRequestError(userOrError.message);
       } else {
-        return new UserView(context, userOrError);
+        return new UserView(this.context, userOrError);
       }
     });
   };
@@ -52,7 +52,7 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
     return user ? new UserView(context, user) : null;
   };
 
-  public createUser = async (context: Context, payload: CreateUserPayload) => {
+  public createUser = async (payload: CreateUserPayload) => {
     const { username, password, firstName, lastName } = payload;
     const passwordHash = await encrypt(password);
     const userToCreate = new UserModel();
@@ -61,10 +61,10 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
     userToCreate.firstName = firstName ?? undefined;
     userToCreate.lastName = lastName ?? undefined;
     const createdUser = await getRepository(UserModel).save(userToCreate);
-    return this.getUserById(context, createdUser.id);
+    return this.getUserById(createdUser.id);
   };
 
-  public login = async (context: Context, payload: LoginPayload) => {
+  public login = async (payload: LoginPayload) => {
     const { username, password } = payload;
     const user = await getRepository(UserModel).findOne({ username });
     if (user) {

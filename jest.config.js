@@ -5,10 +5,10 @@ const { defaults: tsjPreset } = require('ts-jest/presets');
 module.exports = {
   coverageThreshold: {
     global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: -10
+      branches: 60,
+      functions: 60,
+      lines: 60,
+      statements: 10
     }
   },
   collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/graphql/graphql.config.ts', '!src/app/**/*.{ts,js}'],
