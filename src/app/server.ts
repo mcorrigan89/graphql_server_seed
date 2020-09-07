@@ -11,13 +11,17 @@ export interface Route {
 }
 
 export class Server {
-  private httpServer: http.Server;
+  private _httpServer: http.Server;
   private express: express.Application;
 
   constructor() {
     this.express = express();
-    this.httpServer = http.createServer(this.express);
+    this._httpServer = http.createServer(this.express);
     this.middleware();
+  }
+
+  get httpServer() {
+    return this._httpServer;
   }
 
   public init = (port: number) => {

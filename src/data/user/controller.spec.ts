@@ -15,18 +15,18 @@ describe('UserController', () => {
 
   it('should get a user by ID', async () => {
     const contextMock = new Context();
-    const userController = new UserController();
+    const userController = new UserController(contextMock);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
     userToSave.password = 'test-password';
     const savedUser = await getRepository(UserModel).save(userToSave);
-    const userView = await userController.getUserById(contextMock, savedUser.id);
+    const userView = await userController.getUserById(savedUser.id);
     expect(userView.data).toEqual(savedUser);
   });
 
   it('should get a list of users by ids', async () => {
     const contextMock = new Context();
-    const userController = new UserController();
+    const userController = new UserController(contextMock);
     // User 1
     const user1ToSave = new UserModel();
     user1ToSave.username = 'test-user-1';
@@ -37,26 +37,26 @@ describe('UserController', () => {
     user2ToSave.username = 'test-user-2';
     user2ToSave.password = 'test-password-2';
     const savedUser2 = await getRepository(UserModel).save(user2ToSave);
-    const userViews = await userController.getUsersByIds(contextMock, [savedUser1.id, savedUser2.id]);
+    const userViews = await userController.getUsersByIds([savedUser1.id, savedUser2.id]);
     expect(userViews[0].data).toEqual(savedUser1);
     expect(userViews[1].data).toEqual(savedUser2);
   });
 
   it('should get a user by username', async () => {
     const contextMock = new Context();
-    const userController = new UserController();
+    const userController = new UserController(contextMock);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
     userToSave.password = 'test-password';
     const savedUser = await getRepository(UserModel).save(userToSave);
-    const userView = await userController.getUserByUsername(contextMock, 'test-user');
+    const userView = await userController.getUserByUsername('test-user');
     expect(userView!.data).toEqual(savedUser);
   });
 
   it('should create a user', async () => {
     const contextMock = new Context();
-    const userController = new UserController();
-    const createdUser = await userController.createUser(contextMock, { username: 'eminem', firstName: 'Marshal', lastName: 'Mathers', password: 'therealslimshady' });
+    const userController = new UserController(contextMock);
+    const createdUser = await userController.createUser({ username: 'eminem', firstName: 'Marshal', lastName: 'Mathers', password: 'therealslimshady' });
     expect(createdUser.username).toEqual('eminem');
     expect(createdUser.firstName).toEqual('Marshal');
     expect(createdUser.lastName).toEqual('Mathers');

@@ -13,8 +13,8 @@ const healthCheck: Route = {
 
 const main = async () => {
   await connectionPostgres.create(dbConnectionName());
-  const apollo = await createApolloServer();
   const server = new Server();
+  const apollo = await createApolloServer(server.httpServer);
   server.registerMiddleware([tokenCheck]);
   server.addApollo(apollo);
   server.registerRoutes([healthCheck]);

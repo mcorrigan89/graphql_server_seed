@@ -1,6 +1,6 @@
 import { createTestClient } from 'apollo-server-testing';
 import { createSchema } from './graphql.config';
-import { Context } from '@src/app/context';
+import { Context } from '@app/context';
 import { ApolloServer } from 'apollo-server';
 import { connectionPostgres } from '@app/setup.db';
 import { getRepository } from 'typeorm';

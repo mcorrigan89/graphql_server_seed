@@ -1,7 +1,7 @@
 import { ControllerTemplate } from '@utils/controller.template';
 import { getManager, getRepository } from 'typeorm';
-import { Context } from '@src/app/context';
-import { BadRequestError } from '@src/utils/errors';
+import { Context } from '@app/context';
+import { BadRequestError } from '@utils/errors';
 import { UserModel } from './model';
 import { UserView } from './view';
 import { DecodedAuthToken } from '@app/auth.middleware';
@@ -47,9 +47,9 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
     });
   };
 
-  public getUserByUsername = async (context: Context, username: string) => {
+  public getUserByUsername = async (username: string) => {
     const user = await this.loaders['UserByUsername'].load(username);
-    return user ? new UserView(context, user) : null;
+    return user ? new UserView(this.context, user) : null;
   };
 
   public createUser = async (payload: CreateUserPayload) => {

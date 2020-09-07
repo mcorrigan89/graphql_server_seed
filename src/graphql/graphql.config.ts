@@ -4,9 +4,10 @@ import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
 import { addResolveFunctionsToSchema } from 'apollo-server';
 import { resolvers } from '@graphql/resolvers';
-import { join } from 'path';
+import { Server } from 'http';
 import { loadSchema } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { createWebsocketServer } from '@app/websocket.server';
 
 export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
@@ -17,8 +18,9 @@ export const createSchema = async () => {
   return schema;
 };
 
-export const createApolloServer = async () => {
+export const createApolloServer = async (server: Server) => {
   const schema = await createSchema();
+  createWebsocketServer(server, schema);
   return new ApolloServer({
     schema,
     introspection: true,

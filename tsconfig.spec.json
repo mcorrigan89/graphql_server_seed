@@ -7,9 +7,9 @@
     "resolveJsonModule": false
   },
   "include": [
-    "src/**/*.spec.{ts|js}",
-    "src/**/*.test.{ts|js}",
-    "test/**/*.{ts|js}"
+    "**/*.spec.{ts|js}",
+    "**/*.test.{ts|js}",
+    "**/*.{ts|js}"
   ],
   "exclude": []
 }

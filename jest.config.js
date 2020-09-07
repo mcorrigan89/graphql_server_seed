@@ -31,7 +31,6 @@ module.exports = {
     '^[@]services/(.+)': '<rootDir>/src/services/$1',
     '^[@]schema/(.+)': '<rootDir>/src/schema/$1',
     '^[@]data/(.+)': '<rootDir>/src/data/$1',
-    '^[@]src/(.+)': '<rootDir>/src/$1',
     '^[@]app/(.+)': '<rootDir>/src/app/$1',
     '^[@]utils/(.+)': '<rootDir>/src/utils/$1',
     '^[@]tests/(.+)': '<rootDir>/tests/$1'
