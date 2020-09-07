@@ -2,8 +2,7 @@ import { UserController } from './controller';
 import { connectionPostgres } from '../../app/setup.db';
 import { getRepository } from 'typeorm';
 import { UserModel } from './model';
-import { TYPES } from '@app/injection.setup';
-import { injectedContainer } from '@app/injection';
+import { Context } from '@app/context';
 
 describe('UserController', () => {
   beforeAll(async () => {
@@ -14,7 +13,8 @@ describe('UserController', () => {
   });
 
   it('should get a user by ID', async () => {
-    const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
+    const contextMock = new Context();
+    const userController = new UserController(contextMock);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
     userToSave.password = 'test-password';
@@ -24,7 +24,8 @@ describe('UserController', () => {
   });
 
   it('should get a list of users by ids', async () => {
-    const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
+    const contextMock = new Context();
+    const userController = new UserController(contextMock);
     // User 1
     const user1ToSave = new UserModel();
     user1ToSave.username = 'test-user-1';
@@ -41,7 +42,8 @@ describe('UserController', () => {
   });
 
   it('should get a user by username', async () => {
-    const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
+    const contextMock = new Context();
+    const userController = new UserController(contextMock);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
     userToSave.password = 'test-password';
@@ -51,7 +53,8 @@ describe('UserController', () => {
   });
 
   it('should create a user', async () => {
-    const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
+    const contextMock = new Context();
+    const userController = new UserController(contextMock);
     const createdUser = await userController.createUser({ username: 'eminem', firstName: 'Marshal', lastName: 'Mathers', password: 'therealslimshady' });
     expect(createdUser.username).toEqual('eminem');
     expect(createdUser.firstName).toEqual('Marshal');

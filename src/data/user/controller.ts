@@ -1,7 +1,7 @@
 import { ControllerTemplate } from '@utils/controller.template';
 import { getManager, getRepository } from 'typeorm';
-import { Context } from '@src/app/context';
-import { BadRequestError } from '@src/utils/errors';
+import { Context } from '@app/context';
+import { BadRequestError } from '@utils/errors';
 import { UserModel } from './model';
 import { UserView } from './view';
 import { DecodedAuthToken } from '@app/auth.middleware';

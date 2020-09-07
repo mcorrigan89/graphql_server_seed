@@ -7,12 +7,13 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": ".",
+    // "rootDir": "./src",
+    "rootDirs": ["./src", "./test"],
     "removeComments": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "moduleResolution": "node",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -20,18 +21,17 @@
     "traceResolution": false,
     "resolveJsonModule": true,
     "paths": {
-      "@data/*": ["src/data/*"],
-      "@graphql/*": ["src/graphql/*"],
-      "@services/*": ["src/services/*"],
-      "@schema/*": ["src/schema/*"],
-      "@src/*": ["src/*"],
-      "@app/*": ["src/app/*"],
-      "@utils/*": ["src/utils/*"],
+      "@data/*": ["data/*"],
+      "@graphql/*": ["graphql/*"],
+      "@services/*": ["services/*"],
+      "@schema/*": ["schema/*"],
+      "@app/*": ["app/*"],
+      "@utils/*": ["utils/*"],
       "@tests/*": ["tests/*"]
     }
   },
   "include": [
-    "src/**/*",
+    "**/*",
     "typings"
   ],
   "exclude": [

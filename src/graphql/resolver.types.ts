@@ -12,6 +12,45 @@ export type Scalars = {
   Float: number;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  id: Scalars['ID'];
+  text: Scalars['String'];
+};
+
+export type MessagePayload = {
+  text: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  _?: Maybe<Scalars['String']>;
+  createUser: User;
+  login: Scalars['String'];
+  sendMessage: Message;
+};
+
+
+export type MutationCreateUserArgs = {
+  payload: CreateUserPayload;
+};
+
+
+export type MutationLoginArgs = {
+  payload: LoginPayload;
+};
+
+
+export type MutationSendMessageArgs = {
+  payload: MessagePayload;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  _?: Maybe<Scalars['String']>;
+  message?: Maybe<Message>;
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -43,23 +82,6 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  _?: Maybe<Scalars['String']>;
-  createUser: User;
-  login: Scalars['String'];
-};
-
-
-export type MutationCreateUserArgs = {
-  payload: CreateUserPayload;
-};
-
-
-export type MutationLoginArgs = {
-  payload: LoginPayload;
 };
 
 
@@ -140,26 +162,50 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  User: ResolverTypeWrapper<User>;
+  Message: ResolverTypeWrapper<Message>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  MessagePayload: MessagePayload;
+  Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
+  User: ResolverTypeWrapper<User>;
   CreateUserPayload: CreateUserPayload;
   LoginPayload: LoginPayload;
   Query: ResolverTypeWrapper<{}>;
-  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  User: User;
+  Message: Message;
   ID: Scalars['ID'];
   String: Scalars['String'];
+  MessagePayload: MessagePayload;
+  Mutation: {};
+  Subscription: {};
+  User: User;
   CreateUserPayload: CreateUserPayload;
   LoginPayload: LoginPayload;
   Query: {};
-  Mutation: {};
   Boolean: Scalars['Boolean'];
+};
+
+export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>;
+  login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>;
+  sendMessage?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'payload'>>;
+};
+
+export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  _?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "_", ParentType, ContextType>;
+  message?: SubscriptionResolver<Maybe<ResolversTypes['Message']>, "message", ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -177,16 +223,12 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>;
-  login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>;
-};
-
 export type Resolvers<ContextType = Context> = {
+  Message?: MessageResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
 };
 
 
