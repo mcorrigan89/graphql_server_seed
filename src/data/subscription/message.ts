@@ -1,7 +1,4 @@
-import { PubSub } from 'graphql-subscriptions';
-import { Subscriber } from '@utils/subscriber';
-
-export const pubsub = new PubSub();
+import { Subscriber, pubsub } from '@utils/subscriber';
 
 export const SOMETHING_CHANGED_TOPIC = 'something-changed';
 
