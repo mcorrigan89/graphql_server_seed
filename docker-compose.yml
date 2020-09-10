@@ -1,0 +1,36 @@
+version: '3'
+    
+services:
+  redis:
+    image: redis
+    networks:
+      - webnet
+  db:
+    image: postgres
+    networks:
+      - webnet
+    environment:
+      POSTGRES_DATABASE: seed_server
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    # ports:
+    #   - "8001:5432"
+  web:
+    # image: graphqlserverseed
+    build: .
+    networks:
+      - webnet
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_HOST: db
+      REDIS_HOST: redis
+    depends_on: 
+      - "db"
+      - "redis"
+    links:
+      - "db:database"
+    env_file:
+      - .env
+networks:
+  webnet:

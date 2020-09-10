@@ -1,4 +1,4 @@
-import { subscriber, pubsub } from '@data/subscription/message';
+import { subscriber } from '@data/subscription/message';
 import { Resolvers } from '@graphql/resolver.types';
 
 export const resolvers: Resolvers = {
