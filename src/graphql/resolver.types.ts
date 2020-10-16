@@ -37,6 +37,7 @@ export type Query = {
   _?: Maybe<Scalars['String']>;
   me?: Maybe<User>;
   user: User;
+  users: Array<User>;
 };
 
 
@@ -173,6 +174,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

@@ -1,14 +1,12 @@
 import { UserController } from '@data/user/controller';
 import { UserView } from '@data/user/view';
+import { injectable } from 'inversify';
+import { TYPES, lazyInject } from './context.setup';
 
+@injectable()
 export class Context {
-  public readonly userController: UserController;
-
+  @lazyInject(TYPES.USER_CONTROLLER) public userController: UserController;
   private currentUser: UserView | null = null;
-
-  constructor() {
-    this.userController = new UserController(this);
-  }
 
   public getCurrentUser = () => {
     return this.currentUser;

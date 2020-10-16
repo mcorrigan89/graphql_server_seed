@@ -7,6 +7,8 @@ import { resolvers } from '@graphql/resolvers';
 import { join } from 'path';
 import { loadSchema } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { injectedContainer } from '@app/context.injection';
+import { TYPES } from '@app/context.setup';
 
 export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
@@ -23,12 +25,16 @@ export const createApolloServer = async () => {
     schema,
     introspection: true,
     context: async ctx => {
-      const context = new Context();
-      const token = (ctx.req as AuthenticatedRequest).decodedToken;
-      if (token) {
-        await context.setCurrentUser(token.id);
+      try {
+        const context = injectedContainer.get<Context>(TYPES.CONTEXT);
+        const token = (ctx.req as AuthenticatedRequest).decodedToken;
+        if (token) {
+          await context.setCurrentUser(token.id);
+        }
+        return context;
+      } catch (err) {
+        console.log(err);
       }
-      return context;
     }
   });
 };

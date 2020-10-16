@@ -9,13 +9,16 @@ import { encrypt, compare } from '@app/password';
 import { NotFoundError } from '@utils/errors';
 import { createToken } from '@app/token';
 import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '@app/context.setup';
 
 type QueryType = 'UserById' | 'UserByUsername';
 
 const query = () => getManager().createQueryBuilder(UserModel, 'user');
 
+@injectable()
 export class UserController extends ControllerTemplate<UserModel, QueryType> {
-  constructor(context: Context) {
+  constructor(@inject(TYPES.CONTEXT) context: Context) {
     super(context);
     this.loaders['UserById'] = this.wrapQueryInDataLoader(async (ids: ReadonlyArray<string>) => {
       const users = await query().where('user.id in (:...ids)', { ids }).getMany();
@@ -26,6 +29,17 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
       return this.orderResultsByIds(usernames, users, 'username');
     });
   }
+
+  public getUsers = async () => {
+    const users = await query().getMany();
+    return users.map(userOrError => {
+      if (userOrError instanceof Error) {
+        throw new BadRequestError(userOrError.message);
+      } else {
+        return new UserView(this.context, userOrError);
+      }
+    });
+  };
 
   public getUserById = async (id: string) => {
     const user = await this.loaders['UserById'].load(id);
@@ -47,9 +61,9 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
     });
   };
 
-  public getUserByUsername = async (context: Context, username: string) => {
+  public getUserByUsername = async (username: string) => {
     const user = await this.loaders['UserByUsername'].load(username);
-    return user ? new UserView(context, user) : null;
+    return user ? new UserView(this.context, user) : null;
   };
 
   public createUser = async (payload: CreateUserPayload) => {

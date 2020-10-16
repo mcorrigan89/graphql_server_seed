@@ -1,7 +1,9 @@
 import DataLoader from 'dataloader';
 import _ from 'lodash';
 import { Context } from '@src/app/context';
+import { injectable } from 'inversify';
 
+@injectable()
 export class ControllerTemplate<T, LoaderKeys extends string> {
   public loaders: Record<LoaderKeys, DataLoader<string, T>> = {} as Record<LoaderKeys, DataLoader<string, T>>;
   private _context: Context;

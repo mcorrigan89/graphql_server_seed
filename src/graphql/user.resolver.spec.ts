@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { createTestClient } from 'apollo-server-testing';
 import { createSchema } from './graphql.config';
 import { Context } from '@src/app/context';
@@ -5,6 +6,8 @@ import { ApolloServer } from 'apollo-server';
 import { connectionPostgres } from '@app/setup.db';
 import { getRepository } from 'typeorm';
 import { UserModel } from '@data/user/model';
+import { injectedContainer } from '@src/app/context.injection';
+import { TYPES } from '@app/context.setup';
 
 describe('USer Resolvers', () => {
   beforeAll(async () => {
@@ -18,7 +21,7 @@ describe('USer Resolvers', () => {
     const schema = await createSchema();
     const server = new ApolloServer({
       schema,
-      context: () => new Context()
+      context: () => injectedContainer.get<Context>(TYPES.CONTEXT)
     });
     const userToSave = new UserModel();
     userToSave.username = 'graph-test-user';
@@ -45,7 +48,7 @@ describe('USer Resolvers', () => {
     const schema = await createSchema();
     const server = new ApolloServer({
       schema,
-      context: () => new Context()
+      context: () => injectedContainer.get<Context>(TYPES.CONTEXT)
     });
     const { mutate } = createTestClient(server);
     const res = await mutate({

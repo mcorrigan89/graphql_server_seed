@@ -12,6 +12,7 @@ const healthCheck: Route = {
 };
 
 const main = async () => {
+  console.log('start!');
   await connectionPostgres.create(dbConnectionName());
   const apollo = await createApolloServer();
   const server = new Server();
