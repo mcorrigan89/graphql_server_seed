@@ -1,6 +1,6 @@
 import { UserController } from '@data/user/controller';
 import { Context } from './context';
-import { container, TYPES } from './context.setup';
+import { container, TYPES } from './injection.setup';
 
 container.bind<Context>(TYPES.CONTEXT).to(Context);
 container.bind<UserController>(TYPES.USER_CONTROLLER).to(UserController);

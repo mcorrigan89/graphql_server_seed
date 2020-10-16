@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { ViewTemplate, ModelViewTemplate } from './view.template';
-import { TYPES } from '@app/context.setup';
-import { injectedContainer } from '@app/context.injection';
+import { TYPES } from '@app/injection.setup';
+import { injectedContainer } from '@app/injection';
 import { Context } from '../app/context';
 import { ModelTemplate } from './model.template';
 

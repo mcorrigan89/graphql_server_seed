@@ -6,8 +6,8 @@ import { ApolloServer } from 'apollo-server';
 import { connectionPostgres } from '@app/setup.db';
 import { getRepository } from 'typeorm';
 import { UserModel } from '@data/user/model';
-import { injectedContainer } from '@src/app/context.injection';
-import { TYPES } from '@app/context.setup';
+import { injectedContainer } from '@app/injection';
+import { TYPES } from '@app/injection.setup';
 
 describe('USer Resolvers', () => {
   beforeAll(async () => {

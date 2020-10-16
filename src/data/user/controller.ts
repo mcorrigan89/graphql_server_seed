@@ -10,7 +10,7 @@ import { NotFoundError } from '@utils/errors';
 import { createToken } from '@app/token';
 import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@app/context.setup';
+import { TYPES } from '@app/injection.setup';
 
 type QueryType = 'UserById' | 'UserByUsername';
 

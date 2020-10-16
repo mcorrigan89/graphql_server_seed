@@ -7,8 +7,8 @@ import { resolvers } from '@graphql/resolvers';
 import { join } from 'path';
 import { loadSchema } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { injectedContainer } from '@app/context.injection';
-import { TYPES } from '@app/context.setup';
+import { injectedContainer } from '@app/injection';
+import { TYPES } from '@app/injection.setup';
 
 export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });

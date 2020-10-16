@@ -1,7 +1,7 @@
 import { UserController } from '@data/user/controller';
 import { UserView } from '@data/user/view';
 import { injectable } from 'inversify';
-import { TYPES, lazyInject } from './context.setup';
+import { TYPES, lazyInject } from './injection.setup';
 
 @injectable()
 export class Context {

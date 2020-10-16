@@ -1,11 +1,9 @@
-// jest.mock('../../app/context');
-// import { Context } from '../../app/context';
 import { UserController } from './controller';
 import { connectionPostgres } from '../../app/setup.db';
 import { getRepository } from 'typeorm';
 import { UserModel } from './model';
-import { container, TYPES } from '@app/context.setup';
-import { injectedContainer } from '@app/context.injection';
+import { TYPES } from '@app/injection.setup';
+import { injectedContainer } from '@app/injection';
 
 describe('UserController', () => {
   beforeAll(async () => {
@@ -16,8 +14,6 @@ describe('UserController', () => {
   });
 
   it('should get a user by ID', async () => {
-    // const contextMock = new Context();
-    // const userController = new UserController();
     const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
@@ -28,8 +24,6 @@ describe('UserController', () => {
   });
 
   it('should get a list of users by ids', async () => {
-    // const contextMock = new Context();
-    // const userController = new UserController();
     const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
     // User 1
     const user1ToSave = new UserModel();
@@ -47,8 +41,6 @@ describe('UserController', () => {
   });
 
   it('should get a user by username', async () => {
-    // const contextMock = new Context();
-    // const userController = new UserController();
     const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
     const userToSave = new UserModel();
     userToSave.username = 'test-user';
@@ -59,8 +51,6 @@ describe('UserController', () => {
   });
 
   it('should create a user', async () => {
-    // const contextMock = new Context();
-    // const userController = new UserController();
     const userController = injectedContainer.get<UserController>(TYPES.USER_CONTROLLER);
     const createdUser = await userController.createUser({ username: 'eminem', firstName: 'Marshal', lastName: 'Mathers', password: 'therealslimshady' });
     expect(createdUser.username).toEqual('eminem');
