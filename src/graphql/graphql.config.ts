@@ -8,18 +8,19 @@ import { Server } from 'http';
 import { loadSchema } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { createWebsocketServer } from '@app/websocket.server';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 
-export const createSchema = async () => {
+export const createSchema = async (pubsub: RedisPubSub) => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
   const schema = addResolveFunctionsToSchema({
     schema: schemaTypeDefs,
-    resolvers: merge(resolvers)
+    resolvers: merge(resolvers(pubsub))
   });
   return schema;
 };
 
-export const createApolloServer = async (server: Server) => {
-  const schema = await createSchema();
+export const createApolloServer = async (server: Server, pubsub: RedisPubSub) => {
+  const schema = await createSchema(pubsub);
   createWebsocketServer(server, schema);
   return new ApolloServer({
     schema,

@@ -14,7 +14,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/graphql/graphql.config.ts', '!src/app/**/*.{ts,js}'],
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.json',
+      tsconfig: 'tsconfig.spec.json',
       diagnostics: {
         warnOnly: false // In Case of Emergency Break Glass
       }

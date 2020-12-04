@@ -1,16 +1,4 @@
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import Redis from 'ioredis';
-import { serverConfig } from '@app/config';
-
-const redisOptions = {
-  host: serverConfig.redis.host,
-  port: Number(serverConfig.redis.port)
-};
-
-export const pubsub = new RedisPubSub({
-  publisher: new Redis(redisOptions),
-  subscriber: new Redis(redisOptions)
-});
 
 export class Subscriber<U extends string, T> {
   private pubsub: RedisPubSub;

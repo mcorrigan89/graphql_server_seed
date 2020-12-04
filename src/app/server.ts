@@ -4,24 +4,31 @@ import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { createRedisPubSub } from './redis.pubsub';
 
 export interface Route {
   path: string;
   handler: Router | Handler;
 }
-
 export class Server {
   private _httpServer: http.Server;
   private express: express.Application;
+  private _pubsub: RedisPubSub;
 
   constructor() {
     this.express = express();
     this._httpServer = http.createServer(this.express);
     this.middleware();
+    this._pubsub = createRedisPubSub();
   }
 
   get httpServer() {
     return this._httpServer;
+  }
+
+  get pubsub() {
+    return this._pubsub;
   }
 
   public init = (port: number) => {

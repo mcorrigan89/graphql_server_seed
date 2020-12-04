@@ -38,18 +38,17 @@ export interface RedisConfig {
 }
 export interface ServerConfig {
   secret: string;
-  port: string;
+  port: number;
   database: DatabaseConfig;
   redis: {
     host: string;
     port: string;
   };
 }
-console.log(env.POSTGRES_HOST);
 
 export const serverConfig: ServerConfig = {
   secret: env.SECRET as string,
-  port: env.PORT as string,
+  port: Number(env.PORT as string),
   database: {
     host: env.POSTGRES_HOST as string,
     database: env.POSTGRES_DATABASE as string,
