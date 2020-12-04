@@ -2,7 +2,7 @@ import { Server, Route } from '@app/server';
 import { connectionPostgres } from '@app/setup.db';
 import { createApolloServer } from '@graphql/graphql.config';
 import { tokenCheck } from '@app/auth.middleware';
-import { dbConnectionName } from '@app/config';
+import { dbConnectionName, serverConfig } from '@app/config';
 
 const healthCheck: Route = {
   path: '/status',
@@ -14,11 +14,11 @@ const healthCheck: Route = {
 const main = async () => {
   await connectionPostgres.create(dbConnectionName());
   const server = new Server();
-  const apollo = await createApolloServer(server.httpServer);
+  const apollo = await createApolloServer(server.httpServer, server.pubsub);
   server.registerMiddleware([tokenCheck]);
   server.addApollo(apollo);
   server.registerRoutes([healthCheck]);
-  server.init(8080);
+  server.init(serverConfig.port);
 };
 
 main();

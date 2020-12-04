@@ -1,5 +1,6 @@
 import { UserController } from '@data/user/controller';
 import { UserView } from '@data/user/view';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 export class Context {
   public readonly userController: UserController;
