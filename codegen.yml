@@ -5,6 +5,15 @@ generates:
   src/graphql/resolver.types.ts:
     plugins:
       - typescript
+      - typescript-operations
       - typescript-resolvers
     config:
+      scalars:
+        Date: Date
+      useIndexSignature: true
       contextType: '@app/context#Context'
+      wrapFieldDefinitions: true
+      fieldWrapperValue: T | Promise<T> | (() => T) | (() => Promise<T>)
+      wrapEntireFieldDefinitions: true
+      entireFieldWrapperValue: T | Promise<T> | (() => T) | (() => Promise<T>)
+      federation: true
