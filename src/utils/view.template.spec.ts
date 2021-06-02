@@ -1,7 +1,5 @@
 import 'reflect-metadata';
 import { ViewTemplate, ModelViewTemplate } from './view.template';
-import { TYPES } from '@app/injection.setup';
-import { injectedContainer } from '@app/injection';
 import { Context } from '../app/context';
 import { ModelTemplate } from './model.template';
 
@@ -19,7 +17,7 @@ describe('View Template', () => {
   });
 
   it('should return context passed to it', () => {
-    const fakeContext = injectedContainer.get<Context>(TYPES.CONTEXT);
+    const fakeContext = new Context();
     const model: FakeModel = { fizz: 'buzz', flerp: 'derp ' };
     const template = new ViewTemplate(fakeContext, model);
     expect(template.context).toBe(fakeContext);
@@ -36,7 +34,7 @@ describe('View Template', () => {
       version: 1,
       deleted: false
     };
-    const fakeContext = injectedContainer.get<Context>(TYPES.CONTEXT);
+    const fakeContext = new Context();
     const template = new ModelViewTemplate(fakeContext, modelTemplate);
     expect(template.key).toBe(1);
     expect(template.id).toBe('1');
