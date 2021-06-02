@@ -1,7 +1,7 @@
 import { ControllerTemplate } from '@utils/controller.template';
 import { getManager, getRepository } from 'typeorm';
-import { Context } from '@src/app/context';
-import { BadRequestError } from '@src/utils/errors';
+import { Context } from '@app/context';
+import { BadRequestError } from '@utils/errors';
 import { UserModel } from './model';
 import { UserView } from './view';
 import { DecodedAuthToken } from '@app/auth.middleware';
@@ -9,16 +9,13 @@ import { encrypt, compare } from '@app/password';
 import { NotFoundError } from '@utils/errors';
 import { createToken } from '@app/token';
 import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
-import { inject, injectable } from 'inversify';
-import { TYPES } from '@app/injection.setup';
 
 type QueryType = 'UserById' | 'UserByUsername';
 
 const query = () => getManager().createQueryBuilder(UserModel, 'user');
 
-@injectable()
 export class UserController extends ControllerTemplate<UserModel, QueryType> {
-  constructor(@inject(TYPES.CONTEXT) context: Context) {
+  constructor(context: Context) {
     super(context);
     this.loaders['UserById'] = this.wrapQueryInDataLoader(async (ids: ReadonlyArray<string>) => {
       const users = await query().where('user.id in (:...ids)', { ids }).getMany();

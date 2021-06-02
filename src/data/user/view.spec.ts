@@ -1,8 +1,6 @@
 import { UserView } from './view';
 import { UserModel } from './model';
 import { Context } from '../../app/context';
-import { TYPES } from '@app/injection.setup';
-import { injectedContainer } from '@app/injection';
 import { connectionPostgres } from '../../app/setup.db';
 
 describe('UserView', () => {
@@ -14,7 +12,7 @@ describe('UserView', () => {
   });
 
   it('should have model properties exposed', () => {
-    const context = injectedContainer.get<Context>(TYPES.CONTEXT);
+    const context = new Context();
     const userModel = new UserModel();
     userModel.id = '1';
     userModel.firstName = 'Mike';
@@ -28,7 +26,7 @@ describe('UserView', () => {
   });
 
   it('should return undefined for undefined model properties', () => {
-    const context = injectedContainer.get<Context>(TYPES.CONTEXT);
+    const context = new Context();
     const userModel = new UserModel();
     userModel.id = '1';
     userModel.username = 'mcorrigan89';

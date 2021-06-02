@@ -1,4 +1,4 @@
-import { Context } from '@src/app/context';
+import { Context } from '@app/context';
 import { ModelTemplate } from './model.template';
 
 export class ViewTemplate<T> {

@@ -1,5 +1,5 @@
 import { ModelViewTemplate } from '@utils/view.template';
-import { Context } from '@src/app/context';
+import { Context } from '@app/context';
 import { UserModel } from './model';
 
 export class UserView extends ModelViewTemplate<UserModel> {

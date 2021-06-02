@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "allowJs": true,
+    "module": "umd",
+    "resolveJsonModule": false
+  },
+  "include": [
+    "**/*.spec.{ts|js}",
+    "**/*.test.{ts|js}",
+    "**/*.{ts|js}"
+  ],
+  "exclude": []
+}
