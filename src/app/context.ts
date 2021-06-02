@@ -5,6 +5,10 @@ export class Context {
   public userController: UserController;
   private currentUser: UserView | null = null;
 
+  constructor() {
+    this.userController = new UserController(this);
+  }
+
   public getCurrentUser = () => {
     return this.currentUser;
   };
