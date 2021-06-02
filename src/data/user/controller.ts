@@ -28,14 +28,8 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
   }
 
   public getUsers = async () => {
-    const users = await query().getMany();
-    return users.map(userOrError => {
-      if (userOrError instanceof Error) {
-        throw new BadRequestError(userOrError.message);
-      } else {
-        return new UserView(this.context, userOrError);
-      }
-    });
+    const users = await query().orderBy('user.createdAt', 'DESC').getMany();
+    return users.map(user => new UserView(this.context, user));
   };
 
   public getUserById = async (id: string) => {
