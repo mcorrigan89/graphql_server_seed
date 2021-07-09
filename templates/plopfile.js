@@ -63,7 +63,7 @@ const updateContextConstructor = {
   path: path.resolve() + '/src/app/context.ts',
   pattern: ' constructor() {',
   template: ` constructor() {
-    this.{{ camelCase model }}Controller = new {{ pascalCase model }}Controller();`
+    this.{{ camelCase model }}Controller = new {{ pascalCase model }}Controller(this);`
 }
 
 const updateModelIndexImport = {

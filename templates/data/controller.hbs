@@ -10,8 +10,8 @@ type QueryType = '{{ pascalCase model }}ById';
 const query = () => getManager().createQueryBuilder({{ pascalCase model }}Model, '{{ snakeCase model }}')
 
 export class {{ pascalCase model }}Controller extends ControllerTemplate<{{ pascalCase model }}Model, QueryType> {
-  constructor() {
-    super();
+  constructor(context: Context) {
+    super(context);
     this.loaders['{{ pascalCase model }}ById'] = this.wrapQueryInDataLoader(async (ids: ReadonlyArray<string>) => {
       const {{ camelCase model }}s = await query().where('{{ snakeCase model }}.id in (:...ids)', { ids }).getMany();
       return this.orderResultsByIds(ids, {{ camelCase model }}s);
