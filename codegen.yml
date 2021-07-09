@@ -13,6 +13,7 @@ generates:
       useIndexSignature: true
       contextType: '@app/context#Context'
       wrapFieldDefinitions: true
+      maybeValue: 'T extends PromiseLike<infer U> ? Promise<U | null> : T | null'
       fieldWrapperValue: T | Promise<T> | (() => T) | (() => Promise<T>)
       wrapEntireFieldDefinitions: true
       entireFieldWrapperValue: T | Promise<T> | (() => T) | (() => Promise<T>)

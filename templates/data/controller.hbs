@@ -20,18 +20,18 @@ export class {{ pascalCase model }}Controller extends ControllerTemplate<{{ pasc
 
   
 
-  public get{{ pascalCase model }}ById = async (context: Context, id: string) => {
+  public get{{ pascalCase model }}ById = async (id: string) => {
     const {{ camelCase model }} = await this.loaders['{{ pascalCase model }}ById'].load(id);
-    return {{ camelCase model }} ? new {{ pascalCase model }}View(context, {{ camelCase model }}) : null;
+    return {{ camelCase model }} ? new {{ pascalCase model }}View(this.context, {{ camelCase model }}) : null;
   }
 
-  public get{{ pascalCase model }}sByIds = async (context: Context, ids: Array<string>) => {
+  public get{{ pascalCase model }}sByIds = async (ids: Array<string>) => {
     const {{ camelCase model }}s = await this.loaders['{{ pascalCase model }}ById'].loadMany(ids);
     return {{ camelCase model }}s.map({{ camelCase model }}OrError => {
       if ({{ camelCase model }}OrError instanceof Error) {
         throw new BadRequestError({{ camelCase model }}OrError.message)
       } else {
-        return new {{ pascalCase model }}View(context, {{ camelCase model }}OrError)
+        return new {{ pascalCase model }}View(this.context, {{ camelCase model }}OrError)
       }
     });
   }
