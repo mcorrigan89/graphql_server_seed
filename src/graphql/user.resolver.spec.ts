@@ -6,23 +6,17 @@ import { ApolloServer } from 'apollo-server';
 import { connectionPostgres } from '@app/setup.db';
 import { getRepository } from 'typeorm';
 import { UserModel } from '@data/user/model';
-import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { createRedisPubSub } from '@app/redis.pubsub';
-
-let redisPubSub: RedisPubSub;
 
 describe('User Resolvers', () => {
   beforeAll(async () => {
     await connectionPostgres.create('test');
-    redisPubSub = createRedisPubSub();
   });
   afterAll(async () => {
     await connectionPostgres.close();
-    await redisPubSub.close();
   });
 
   it('finds created User By Id', async () => {
-    const schema = await createSchema(redisPubSub);
+    const schema = await createSchema();
     const server = new ApolloServer({
       schema,
       context: () => new Context()
@@ -49,7 +43,7 @@ describe('User Resolvers', () => {
   });
 
   it('should create a user', async () => {
-    const schema = await createSchema(redisPubSub);
+    const schema = await createSchema();
     const server = new ApolloServer({
       schema,
       context: () => new Context()

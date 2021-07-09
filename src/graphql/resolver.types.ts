@@ -2,6 +2,10 @@ import { GraphQLResolveInfo } from 'graphql';
 import { Context } from '@app/context';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type FieldWrapper<T> = T | Promise<T> | (() => T) | (() => Promise<T>);
+export type EntireFieldWrapper<T> = T | Promise<T> | (() => T) | (() => Promise<T>);
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -10,12 +14,29 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  _FieldSet: any;
+};
+
+
+
+
+
+export type CreateUserPayload = {
+  username: Scalars['String'];
+  password: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+};
+
+export type LoginPayload = {
+  username: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Message = {
   __typename?: 'Message';
-  id: Scalars['ID'];
-  text: Scalars['String'];
+  id: EntireFieldWrapper<FieldWrapper<Scalars['ID']>>;
+  text: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
 };
 
 export type MessagePayload = {
@@ -24,10 +45,10 @@ export type MessagePayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  _?: Maybe<Scalars['String']>;
-  createUser: User;
-  login: Scalars['String'];
-  sendMessage: Message;
+  _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+  createUser: EntireFieldWrapper<FieldWrapper<User>>;
+  login: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
+  sendMessage: EntireFieldWrapper<FieldWrapper<Message>>;
 };
 
 
@@ -45,38 +66,12 @@ export type MutationSendMessageArgs = {
   payload: MessagePayload;
 };
 
-export type Subscription = {
-  __typename?: 'Subscription';
-  _?: Maybe<Scalars['String']>;
-  message?: Maybe<Message>;
-};
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['ID'];
-  username: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-};
-
-export type CreateUserPayload = {
-  username: Scalars['String'];
-  password: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-};
-
-export type LoginPayload = {
-  username: Scalars['String'];
-  password: Scalars['String'];
-};
-
 export type Query = {
   __typename?: 'Query';
-  _?: Maybe<Scalars['String']>;
-  me?: Maybe<User>;
-  user: User;
-  users: Array<User>;
+  _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+  me?: EntireFieldWrapper<Maybe<FieldWrapper<User>>>;
+  user: EntireFieldWrapper<FieldWrapper<User>>;
+  users: EntireFieldWrapper<Array<FieldWrapper<User>>>;
 };
 
 
@@ -84,7 +79,24 @@ export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+  message?: EntireFieldWrapper<Maybe<FieldWrapper<Message>>>;
+  subMessage?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+};
 
+export type User = {
+  __typename?: 'User';
+  id: EntireFieldWrapper<FieldWrapper<Scalars['ID']>>;
+  username: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
+  firstName?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+  lastName?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+};
+
+
+export type WithIndex<TObject> = TObject & Record<string, any>;
+export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -161,75 +173,76 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = {
+export type ResolversTypes = ResolversObject<{
+  CreateUserPayload: CreateUserPayload;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  LoginPayload: LoginPayload;
   Message: ResolverTypeWrapper<Message>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   MessagePayload: MessagePayload;
   Mutation: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
-  CreateUserPayload: CreateUserPayload;
-  LoginPayload: LoginPayload;
-  Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-};
+}>;
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = {
+export type ResolversParentTypes = ResolversObject<{
+  CreateUserPayload: CreateUserPayload;
+  String: Scalars['String'];
+  LoginPayload: LoginPayload;
   Message: Message;
   ID: Scalars['ID'];
-  String: Scalars['String'];
   MessagePayload: MessagePayload;
   Mutation: {};
+  Query: {};
   Subscription: {};
   User: User;
-  CreateUserPayload: CreateUserPayload;
-  LoginPayload: LoginPayload;
-  Query: {};
   Boolean: Scalars['Boolean'];
-};
+}>;
 
-export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
+export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>;
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>;
   sendMessage?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'payload'>>;
-};
+}>;
 
-export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+}>;
+
+export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   _?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "_", ParentType, ContextType>;
   message?: SubscriptionResolver<Maybe<ResolversTypes['Message']>, "message", ParentType, ContextType>;
-};
+  subMessage?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "subMessage", ParentType, ContextType>;
+}>;
 
-export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
-};
-
-export type Resolvers<ContextType = Context> = {
+export type Resolvers<ContextType = Context> = ResolversObject<{
   Message?: MessageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
-};
+}>;
 
 
 /**

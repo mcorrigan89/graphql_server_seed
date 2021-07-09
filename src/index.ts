@@ -15,9 +15,9 @@ const main = async () => {
   console.log('start!');
   await connectionPostgres.create(dbConnectionName());
   const server = new Server();
-  const apollo = await createApolloServer(server.httpServer, server.pubsub);
+  const { apolloServer, schema } = await createApolloServer(server.httpServer, server.pubsub);
   server.registerMiddleware([tokenCheck]);
-  server.addApollo(apollo);
+  server.addApollo(apolloServer, schema);
   server.registerRoutes([healthCheck]);
   server.init(serverConfig.port);
 };
