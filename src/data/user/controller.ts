@@ -18,7 +18,6 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
   constructor(context: Context) {
     super(context);
     this.loaders['UserById'] = this.wrapQueryInDataLoader(async (ids: ReadonlyArray<string>) => {
-      console.log('QUERY TO SQL');
       const users = await query().where('user.id in (:...ids)', { ids }).getMany();
       return this.orderResultsByIds(ids, users);
     });
@@ -29,7 +28,6 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
   }
 
   public getUsers = async () => {
-    console.log('QUERY TO SQL');
     const users = await query().orderBy('user.createdAt', 'DESC').getMany();
     return users.map(user => new UserView(this.context, user));
   };

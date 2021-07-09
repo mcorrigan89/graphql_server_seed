@@ -21,6 +21,12 @@ export type Scalars = {
 
 
 
+
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
+}
+
 export type CreateUserPayload = {
   username: Scalars['String'];
   password: Scalars['String'];
@@ -33,22 +39,11 @@ export type LoginPayload = {
   password: Scalars['String'];
 };
 
-export type Message = {
-  __typename?: 'Message';
-  id: EntireFieldWrapper<FieldWrapper<Scalars['ID']>>;
-  text: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
-};
-
-export type MessagePayload = {
-  text: Scalars['String'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
   createUser: EntireFieldWrapper<FieldWrapper<User>>;
   login: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
-  sendMessage: EntireFieldWrapper<FieldWrapper<Message>>;
 };
 
 
@@ -59,11 +54,6 @@ export type MutationCreateUserArgs = {
 
 export type MutationLoginArgs = {
   payload: LoginPayload;
-};
-
-
-export type MutationSendMessageArgs = {
-  payload: MessagePayload;
 };
 
 export type Query = {
@@ -82,8 +72,6 @@ export type QueryUserArgs = {
 export type Subscription = {
   __typename?: 'Subscription';
   _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
-  message?: EntireFieldWrapper<Maybe<FieldWrapper<Message>>>;
-  subMessage?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
 };
 
 export type User = {
@@ -174,16 +162,16 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  CacheControlScope: CacheControlScope;
   CreateUserPayload: CreateUserPayload;
   String: ResolverTypeWrapper<Scalars['String']>;
   LoginPayload: LoginPayload;
-  Message: ResolverTypeWrapper<Message>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
-  MessagePayload: MessagePayload;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -192,27 +180,24 @@ export type ResolversParentTypes = ResolversObject<{
   CreateUserPayload: CreateUserPayload;
   String: Scalars['String'];
   LoginPayload: LoginPayload;
-  Message: Message;
-  ID: Scalars['ID'];
-  MessagePayload: MessagePayload;
   Mutation: {};
   Query: {};
+  ID: Scalars['ID'];
   Subscription: {};
   User: User;
+  Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
 }>;
 
-export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+export type CacheControlDirectiveArgs = {   maxAge?: Maybe<Scalars['Int']>;
+  scope?: Maybe<CacheControlScope>; };
+
+export type CacheControlDirectiveResolver<Result, Parent, ContextType = Context, Args = CacheControlDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'payload'>>;
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'payload'>>;
-  sendMessage?: Resolver<ResolversTypes['Message'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'payload'>>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -224,8 +209,6 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   _?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "_", ParentType, ContextType>;
-  message?: SubscriptionResolver<Maybe<ResolversTypes['Message']>, "message", ParentType, ContextType>;
-  subMessage?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "subMessage", ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
@@ -237,7 +220,6 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  Message?: MessageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
@@ -250,3 +232,13 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = Context> = Resolvers<ContextType>;
+export type DirectiveResolvers<ContextType = Context> = ResolversObject<{
+  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
+}>;
+
+
+/**
+ * @deprecated
+ * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
+ */
+export type IDirectiveResolvers<ContextType = Context> = DirectiveResolvers<ContextType>;
