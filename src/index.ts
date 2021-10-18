@@ -19,6 +19,7 @@ const main = async () => {
   server.registerMiddleware([tokenCheck]);
   server.addApollo(apolloServer, schema);
   server.registerRoutes([healthCheck]);
+  console.log(serverConfig.port)
   server.init(serverConfig.port);
 };
 

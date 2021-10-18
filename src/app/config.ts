@@ -17,9 +17,6 @@ export const isProduction: boolean = env.NODE_ENV === 'production';
 export const isTest: boolean = env.NODE_ENV === 'test' || env.NODE_ENV === 'ci';
 const root = path.resolve('.');
 
-const serverKey = fs.readFileSync(root + '/localhost-key.pem');
-const serverCert = fs.readFileSync(root + '/localhost.pem');
-
 if (isTest) {
   dotenv.config({ path: root + '/.env.test' });
 } else {
@@ -43,8 +40,6 @@ export interface RedisConfig {
 export interface ServerConfig {
   secret: string;
   port: number;
-  serverCert: Buffer;
-  serverKey: Buffer;
   database: DatabaseConfig;
   redis: {
     host: string;
@@ -55,8 +50,6 @@ export interface ServerConfig {
 export const serverConfig: ServerConfig = {
   secret: env.SECRET as string,
   port: Number(env.PORT as string),
-  serverCert,
-  serverKey,
   database: {
     host: env.POSTGRES_HOST as string,
     database: env.POSTGRES_DATABASE as string,

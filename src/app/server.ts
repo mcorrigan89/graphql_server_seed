@@ -1,4 +1,4 @@
-import spdy from 'spdy';
+import http from 'http';
 import express, { Router, Handler } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -12,16 +12,13 @@ export interface Route {
   handler: Router | Handler;
 }
 export class Server {
-  private _httpServer: spdy.Server;
+  private _httpServer: http.Server;
   private express: express.Application;
   private _schema: GraphQLSchema;
 
   constructor() {
     this.express = express();
-    this._httpServer = spdy.createServer({
-      cert: serverConfig.serverCert,
-      key: serverConfig.serverKey
-    }, this.express);
+    this._httpServer = http.createServer(this.express);
     this.middleware();
   }
 
