@@ -17,7 +17,7 @@ const main = async () => {
   const server = new Server();
   const { apolloServer, schema } = await createApolloServer(server.httpServer);
   server.registerMiddleware([tokenCheck]);
-  server.addApollo(apolloServer, schema);
+  await server.addApollo(apolloServer, schema);
   server.registerRoutes([healthCheck]);
   console.log(serverConfig.port)
   server.init(serverConfig.port);

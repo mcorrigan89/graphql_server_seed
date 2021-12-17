@@ -2,17 +2,17 @@ import { ApolloServer } from 'apollo-server-express';
 import { Context } from '@app/context';
 import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
-import { addResolveFunctionsToSchema } from 'apollo-server';
 import { KeyValueCache } from 'apollo-server-caching';
 import { resolvers } from '@graphql/resolvers';
 import { Server } from 'http';
 import { loadSchema } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
 
 export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
-  const schema = addResolveFunctionsToSchema({
+  const schema = addResolversToSchema({
     schema: schemaTypeDefs,
     resolvers: merge(resolvers())
   });

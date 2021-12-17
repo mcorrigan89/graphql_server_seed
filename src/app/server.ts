@@ -42,8 +42,9 @@ export class Server {
     });
   };
 
-  public addApollo = (apollo: ApolloServer, schema: GraphQLSchema) => {
+  public addApollo = async (apollo: ApolloServer, schema: GraphQLSchema) => {
     this._schema = schema;
+    await apollo.start();
     apollo.applyMiddleware({
       app: this.express
     });
