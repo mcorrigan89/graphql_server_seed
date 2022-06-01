@@ -84,4 +84,5 @@ export class UserController extends ControllerTemplate<UserModel, QueryType> {
       throw new NotFoundError('User not found');
     }
   };
+
 }
