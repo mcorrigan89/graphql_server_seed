@@ -3,7 +3,15 @@ import { UserView } from '@views/user.view';
 import { CreateUserPayload, LoginPayload } from '@graphql/resolver.types';
 import { IUserService } from '@services/user.service';
 
-export class UserController {
+export interface IUserController {
+  getUserById: (id: string) => Promise<UserView>;
+  getUsersByIds: (ids: string[]) => Promise<UserView[]>;
+  getUserByUsername: (username: string) => Promise<UserView>;
+  createUser: (payload: CreateUserPayload) => Promise<UserView>;
+  login: (payload: LoginPayload) => Promise<string>;
+}
+
+export class UserController implements IUserController {
   private context: Context;
   private userService: IUserService;
   constructor(context: Context, userService: IUserService) {
@@ -12,7 +20,8 @@ export class UserController {
   }
 
   public getUserById = async (id: string) => {
-    return this.userService.byIdOrError(id);
+    const user = await this.userService.byIdOrError(id);
+    return new UserView(this.context, user);
   };
 
   public getUsersByIds = async (ids: Array<string>) => {
@@ -21,7 +30,8 @@ export class UserController {
   };
 
   public getUserByUsername = async (username: string) => {
-    return this.userService.byUsername(username)
+    const user = await this.userService.byUsername(username)
+    return new UserView(this.context, user);
   };
 
   public createUser = async (payload: CreateUserPayload) => {

@@ -8,7 +8,7 @@
 
 import { DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { MODELS } from 'models/index';
+import { MODELS } from '@models/index';
 import path from 'path';
 
 const env = process.env;
@@ -47,7 +47,7 @@ export interface ServerConfig {
 }
 
 export const serverConfig: ServerConfig = {
-  secret: env.SECRET as string,
+  secret: isTest ? 'flerpderp' : env.SECRET as string,
   port: Number(env.PORT as string),
   database: {
     host: env.POSTGRES_HOST as string,

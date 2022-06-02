@@ -12,6 +12,7 @@ module.exports = {
     }
   },
   collectCoverageFrom: ['src/**/*.{ts,js}', '!**/node_modules/**', '!src/index.ts', '!src/graphql/graphql.config.ts', '!src/app/**/*.{ts,js}'],
+  coveragePathIgnorePatterns: ['.di.ts'],
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.spec.json',
@@ -28,9 +29,13 @@ module.exports = {
     //   so replicate the 'compilerOptions.paths' from `tsconfig.json` here
     //   example:  https://kulshekhar.github.io/ts-jest/user/config/#paths-mapping
     '^[@]graphql/(.+)': '<rootDir>/src/graphql/$1',
+    '^[@]controllers/(.+)': '<rootDir>/src/controllers/$1',
+    '^[@]models/(.+)': '<rootDir>/src/models/$1',
+    '^[@]repositories/(.+)': '<rootDir>/src/repositories/$1',
     '^[@]services/(.+)': '<rootDir>/src/services/$1',
+    '^[@]views/(.+)': '<rootDir>/src/views/$1',
     '^[@]schema/(.+)': '<rootDir>/src/schema/$1',
-    '^[@]data/(.+)': '<rootDir>/src/data/$1',
+    '^[@]src/(.+)': '<rootDir>/src/$1',
     '^[@]app/(.+)': '<rootDir>/src/app/$1',
     '^[@]utils/(.+)': '<rootDir>/src/utils/$1',
     '^[@]tests/(.+)': '<rootDir>/tests/$1'

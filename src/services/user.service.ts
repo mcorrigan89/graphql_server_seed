@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import DataLoader from 'dataloader';
 import { autoInjectable, inject } from 'tsyringe';
 import { UserModel } from '@models/user.model';
