@@ -1,6 +1,6 @@
 schema: 
   - src/graphql/*.graphql
-  - src/data/**/*.graphql
+  - src/resolvers/**/*.graphql
 generates:
   src/graphql/resolver.types.ts:
     plugins:
@@ -10,6 +10,8 @@ generates:
     config:
       scalars:
         Date: Date
+      mappers:
+        User: '@views/user.view#UserView'
       useIndexSignature: true
       contextType: '@app/context#Context'
       wrapFieldDefinitions: true

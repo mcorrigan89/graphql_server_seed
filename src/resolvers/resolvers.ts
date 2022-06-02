@@ -1,4 +1,5 @@
 import { Resolvers } from '@graphql/resolver.types';
+import { userResolvers } from './user.resolver';
 
 export const resolvers = (): Resolvers => ({
   Query: {
@@ -8,5 +9,6 @@ export const resolvers = (): Resolvers => ({
   Mutation: {
     createUser: (_, args, context) => context.userController.createUser(args.payload),
     login: (_, args, context) => context.userController.login(args.payload)
-  }
+  },
+  User: userResolvers
 });

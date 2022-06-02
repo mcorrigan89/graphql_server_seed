@@ -4,6 +4,7 @@ import { UserControllerFactory } from '@controllers/user.controller.factory';
 import { UserModel } from '@models/user.model';
 import { SERVICE_TYPES } from '@services/types.di';
 import { UserService } from '@services/user.service';
+import { UserView } from '@views/user.view';
 import { autoInjectable, inject } from 'tsyringe';
 
 export class Context {
@@ -17,7 +18,7 @@ export class Context {
   }
 
   public getCurrentUser = () => {
-    return this.currentUser;
+    return this.currentUser ? new UserView(this, this.currentUser) : null;
   };
 
   public setCurrentUser = async (id: string) => {

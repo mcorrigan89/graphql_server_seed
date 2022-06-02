@@ -67,7 +67,7 @@ describe('UserController', () => {
     userServiceMock.create.returns(Promise.resolve(newUser));
     const createdUser = await userController.createUser({ username: 'eminem', firstName: 'Marshal', lastName: 'Mathers', password: 'therealslimshady' });
     expect(sinon.assert.calledWith(userServiceMock.create, { username: 'eminem', password: 'therealslimshady' }))
-    expect(createdUser.username).toEqual('eminem');
+    expect(createdUser.username()).toEqual('eminem');
   });
 
   it('should call userservice to login', async () => {

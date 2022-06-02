@@ -2,7 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { Context, ContextFactory } from '@app/context';
 import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
-import { resolvers } from '@graphql/resolvers';
+import { resolvers } from '@resolvers/resolvers';
 import { Server } from 'http';
 import { loadSchema } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema'

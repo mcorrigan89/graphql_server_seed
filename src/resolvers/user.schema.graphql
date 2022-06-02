@@ -3,6 +3,7 @@ type User @cacheControl(maxAge: 10, scope: PUBLIC ) {
   username: String!
   firstName: String
   lastName: String
+  otherStuff: [String]
 }
 
 input CreateUserPayload {

@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { UserView } from '@views/user.view';
 import { Context } from '@app/context';
 export type Maybe<T> = T extends PromiseLike<infer U> ? Promise<U | null> : T | null;
 export type InputMaybe<T> = T extends PromiseLike<infer U> ? Promise<U | null> : T | null;
@@ -74,6 +75,7 @@ export type User = {
   firstName?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
   id: EntireFieldWrapper<FieldWrapper<Scalars['ID']>>;
   lastName?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
+  otherStuff?: EntireFieldWrapper<Maybe<Array<Maybe<FieldWrapper<Scalars['String']>>>>>;
   username: EntireFieldWrapper<FieldWrapper<Scalars['String']>>;
 };
 
@@ -155,7 +157,7 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Subscription: ResolverTypeWrapper<{}>;
-  User: ResolverTypeWrapper<User>;
+  User: ResolverTypeWrapper<UserView>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
@@ -169,7 +171,7 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {};
   ID: Scalars['ID'];
   Subscription: {};
-  User: User;
+  User: UserView;
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
 }>;
@@ -201,6 +203,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  otherStuff?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

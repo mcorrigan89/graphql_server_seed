@@ -26,6 +26,7 @@
       "@repositories/*": ["repositories/*"],
       "@services/*": ["services/*"],
       "@views/*": ["views/*"],
+      "@resolvers/*": ["resolvers/*"],
       "@graphql/*": ["graphql/*"],
       "@schema/*": ["schema/*"],
       "@app/*": ["app/*"],
