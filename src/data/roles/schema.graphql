@@ -1,7 +1,0 @@
-type Roles {
-  id: ID!
-}
-
-extend type Query {
-  roles(id: ID!): Roles
-}

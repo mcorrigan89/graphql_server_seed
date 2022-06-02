@@ -1,15 +1,19 @@
-import { RolesController } from '@data/roles/controller'; 
-import { UserController } from '@data/user/controller';
-import { UserView } from '@data/user/view';
+import { CONTROLLER_TYPES } from '@controllers/types.di';
+import { UserController } from '@controllers/user.controller';
+import { UserControllerFactory } from '@controllers/user.controller.factory';
+import { UserModel } from '@models/user.model';
+import { SERVICE_TYPES } from '@services/types.di';
+import { UserService } from '@services/user.service';
+import { autoInjectable, inject } from 'tsyringe';
 
 export class Context {
-  public readonly rolesController: RolesController;
+  public currentUser: UserModel | null;
+  public userService: UserService;
   public userController: UserController;
-  private currentUser: UserView | null = null;
 
-  constructor() {
-    this.rolesController = new RolesController(this);
-    this.userController = new UserController(this);
+  constructor(userService: UserService, userControllerFactory: UserControllerFactory) {
+    this.userService = userService;
+    this.userController = userControllerFactory.create(this);
   }
 
   public getCurrentUser = () => {
@@ -17,6 +21,19 @@ export class Context {
   };
 
   public setCurrentUser = async (id: string) => {
-    this.currentUser = await this.userController.getUserById(id);
+    this.currentUser = await this.userService.byId(id);
   };
+}
+
+@autoInjectable()
+export class ContextFactory {
+
+  constructor(
+    @inject(SERVICE_TYPES.UserService) public userService: UserService,
+    @inject(CONTROLLER_TYPES.UserControllerFactory) public userControllerFactory: UserControllerFactory,
+  ) {}
+
+  createContext() {
+    return new Context(this.userService, this.userControllerFactory);
+  }
 }

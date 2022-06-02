@@ -1,14 +1,13 @@
 import { ApolloServer } from 'apollo-server-express';
-import { Context } from '@app/context';
+import { Context, ContextFactory } from '@app/context';
 import { AuthenticatedRequest } from '@app/auth.middleware';
 import { merge } from 'lodash';
-import { KeyValueCache } from 'apollo-server-caching';
 import { resolvers } from '@graphql/resolvers';
 import { Server } from 'http';
 import { loadSchema } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import responseCachePlugin from 'apollo-server-plugin-response-cache';
+import { container } from 'tsyringe';
 
 export const createSchema = async () => {
   const schemaTypeDefs = await loadSchema('./src/**/*.graphql', { loaders: [new GraphQLFileLoader()] });
@@ -24,17 +23,11 @@ export const createApolloServer = async (server: Server) => {
   const apolloServer = new ApolloServer({
     schema,
     introspection: true,
-    plugins:[responseCachePlugin({
-      sessionId: (requestContext) => { 
-        const context = requestContext.context as Context;
-        const user = context.getCurrentUser();
-        const userId = user?.id;
-        return userId ?? null;
-      },
-    })],
+    plugins:[],
     context: async ctx => {
+      const contextFactory = container.resolve(ContextFactory)
       try {
-        const context = new Context();
+        const context = contextFactory.createContext();
         const token = (ctx.req as AuthenticatedRequest).decodedToken;
         if (token) {
           await context.setCurrentUser(token.id);

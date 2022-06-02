@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import { Server, Route } from '@app/server';
-import { connectionPostgres } from '@app/setup.db';
 import { createApolloServer } from '@graphql/graphql.config';
 import { tokenCheck } from '@app/auth.middleware';
-import { dbConnectionName, serverConfig } from '@app/config';
+import { serverConfig } from '@app/config';
+import { datasource } from '@app/datasource';
+import { initDI } from '@app/init.di';
 
 const healthCheck: Route = {
   path: '/status',
@@ -13,7 +15,8 @@ const healthCheck: Route = {
 
 const main = async () => {
   console.log('start!');
-  await connectionPostgres.create(dbConnectionName());
+  await datasource.initialize();
+  initDI();
   const server = new Server();
   const { apolloServer, schema } = await createApolloServer(server.httpServer);
   server.registerMiddleware([tokenCheck]);

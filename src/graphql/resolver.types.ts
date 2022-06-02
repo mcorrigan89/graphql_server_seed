@@ -7,7 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type FieldWrapper<T> = T | Promise<T> | (() => T) | (() => Promise<T>);
 export type EntireFieldWrapper<T> = T | Promise<T> | (() => T) | (() => Promise<T>);
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -56,24 +56,12 @@ export type Query = {
   __typename?: 'Query';
   _?: EntireFieldWrapper<Maybe<FieldWrapper<Scalars['String']>>>;
   me?: EntireFieldWrapper<Maybe<FieldWrapper<User>>>;
-  roles?: EntireFieldWrapper<Maybe<FieldWrapper<Roles>>>;
   user: EntireFieldWrapper<FieldWrapper<User>>;
-  users: EntireFieldWrapper<Array<FieldWrapper<User>>>;
-};
-
-
-export type QueryRolesArgs = {
-  id: Scalars['ID'];
 };
 
 
 export type QueryUserArgs = {
   id: Scalars['ID'];
-};
-
-export type Roles = {
-  __typename?: 'Roles';
-  id: EntireFieldWrapper<FieldWrapper<Scalars['ID']>>;
 };
 
 export type Subscription = {
@@ -166,7 +154,6 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  Roles: ResolverTypeWrapper<Roles>;
   Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -181,7 +168,6 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   Query: {};
   ID: Scalars['ID'];
-  Roles: Roles;
   Subscription: {};
   User: User;
   Int: Scalars['Int'];
@@ -204,14 +190,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  roles?: Resolver<Maybe<ResolversTypes['Roles']>, ParentType, ContextType, RequireFields<QueryRolesArgs, 'id'>>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
-}>;
-
-export type RolesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Roles'] = ResolversParentTypes['Roles']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
@@ -229,7 +208,6 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Roles?: RolesResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 }>;

@@ -6,11 +6,10 @@
   - https://www.npmjs.com/package/dotenv
 */
 
-import { ConnectionOptions } from 'typeorm';
+import { DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { MODELS } from '@data/index';
+import { MODELS } from 'models/index';
 import path from 'path';
-import fs from 'fs';
 
 const env = process.env;
 export const isProduction: boolean = env.NODE_ENV === 'production';
@@ -62,7 +61,7 @@ export const serverConfig: ServerConfig = {
   }
 };
 
-export const connectionOptions: ConnectionOptions[] = [
+export const connectionOptions: DataSourceOptions[] = [
   {
     name: 'default',
     type: 'postgres',
@@ -71,16 +70,16 @@ export const connectionOptions: ConnectionOptions[] = [
     username: env.POSTGRES_USER || '',
     password: env.POSTGRES_PASSWORD || '',
     database: env.POSTGRES_DATABASE || '',
-    synchronize: true,
+    synchronize: false,
     dropSchema: false,
     logging: false,
     cache: true,
     entities: MODELS,
     migrations: env.NODE_ENV === 'production' ? [] : ['migration/*.ts'],
     subscribers: env.NODE_ENV === 'production' ? ['dist/subscriber/**/*.js'] : ['src/subscriber/**/*.ts'],
-    cli: {
-      migrationsDir: 'migration'
-    }
+    // cli: {
+    //   migrationsDir: 'migration'
+    // }
   },
   {
     name: 'test',

@@ -21,13 +21,17 @@
     "traceResolution": false,
     "resolveJsonModule": true,
     "paths": {
-      "@data/*": ["data/*"],
-      "@graphql/*": ["graphql/*"],
+      "@controllers/*": ["controllers/*"],
+      "@models/*": ["models/*"],
+      "@repositories/*": ["repositories/*"],
       "@services/*": ["services/*"],
+      "@views/*": ["views/*"],
+      "@graphql/*": ["graphql/*"],
       "@schema/*": ["schema/*"],
       "@app/*": ["app/*"],
       "@utils/*": ["utils/*"],
-      "@tests/*": ["tests/*"]
+      "@tests/*": ["tests/*"],
+      "@config": ["app/config"]
     }
   },
   "include": [

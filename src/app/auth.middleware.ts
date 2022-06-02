@@ -1,7 +1,13 @@
 import { Request, RequestHandler } from 'express';
 import { verifyToken } from './token';
 
-export const getToken = (req: Request) => req.headers.authorization;
+export const getToken = (req: Request) => {
+  const authString = req.headers.authorization;
+  if (authString) {
+    return authString.split(' ')[1]
+  }
+  return null;
+};
 
 export interface DecodedAuthToken {
   id: string;
